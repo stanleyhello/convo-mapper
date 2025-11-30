@@ -3,6 +3,30 @@ import queue
 import threading
 
 import numpy as np
+
+# =========================
+# NUMPY / SOUNDCard PATCH
+# =========================
+# Work around NumPy 2.x removing the old binary mode of fromstring,
+# which soundcard still uses internally.
+try:
+    _orig_fromstring = np.fromstring
+
+    def _fromstring_compat(string, dtype=float, count=-1, sep=''):
+        # soundcard passes a raw buffer object from _ffi.buffer(...)
+        # with sep == '' → this is the deprecated "binary" mode.
+        if sep == '' and not isinstance(string, str):
+            # treat anything non-string here as a raw bytes-like buffer
+            return np.frombuffer(string, dtype=dtype, count=count)
+
+        # for normal (text) use-cases, defer to the original implementation
+        return _orig_fromstring(string, dtype=dtype, count=count, sep=sep)
+
+    np.fromstring = _fromstring_compat
+except Exception:
+    # if anything goes wrong, leave numpy as-is
+    pass
+
 import soundcard as sc
 from faster_whisper import WhisperModel
 from flask import Flask, jsonify, render_template_string
@@ -13,9 +37,19 @@ from flask import Flask, jsonify, render_template_string
 # =========================
 
 SAMPLE_RATE = 16000          # target sample rate for STT
-CHUNK_SECONDS = 5.0          # length of audio per STT call
-MODEL_NAME = "small"         # tiny/base/small/medium/large-v3
+
+# recorder buffer sizes (larger = fewer underruns)
+REC_BLOCKSIZE = 1024         # frames per read for both system and mic
+
+# separate chunk sizes
+SYSTEM_CHUNK_SECONDS = 3.0   # system audio chunks
+MIC_CHUNK_SECONDS = 4.0      # mic audio chunks (more context for accuracy)
+
+MODEL_NAME = "medium"        # "tiny"/"base" recommended for low latency
 LANGUAGE = "en"              # or None for auto
+
+# Preferred device for Whisper: "cuda" (GPU) or "cpu"
+WHISPER_DEVICE_PREFERENCE = "cuda"
 
 # Optional filters to force a specific device by name substring
 # e.g. "Focusrite USB Audio" or "DELL S2721Q"
@@ -93,9 +127,9 @@ def system_audio_loop():
     """
     loopback_mic = get_system_loopback_mic()
 
-    with loopback_mic.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=1024) as rec:
+    with loopback_mic.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=REC_BLOCKSIZE) as rec:
         while True:
-            data = rec.record(numframes=1024)  # (frames, channels)
+            data = rec.record(numframes=REC_BLOCKSIZE)  # (frames, channels)
             timestamp = time.time()
             system_q.put((timestamp, data.astype(np.float32)))
 
@@ -107,9 +141,9 @@ def mic_audio_loop():
     """
     mic = get_mic()
 
-    with mic.recorder(samplerate=SAMPLE_RATE, channels=1, blocksize=1024) as rec:
+    with mic.recorder(samplerate=SAMPLE_RATE, channels=1, blocksize=REC_BLOCKSIZE) as rec:
         while True:
-            data = rec.record(numframes=1024)  # (frames, channels)
+            data = rec.record(numframes=REC_BLOCKSIZE)  # (frames, channels)
             timestamp = time.time()
             mic_q.put((timestamp, data.astype(np.float32)))
 
@@ -122,8 +156,16 @@ def chunker_worker(name, in_q, out_q, sample_rate, chunk_seconds):
     """
     Collect blocks from in_q, convert to mono, accumulate until
     chunk_seconds of audio, then push (name, chunk) to out_q.
+
+    Uses a small overlap between successive chunks so words at
+    boundaries are less likely to be cut in half.
     """
     samples_needed = int(sample_rate * chunk_seconds)
+    # 200 ms overlap
+    overlap_samples = int(sample_rate * 0.2)
+    # never overlap more than the chunk itself
+    overlap_samples = min(overlap_samples, samples_needed // 2)
+
     buffer = np.zeros(0, dtype=np.float32)
 
     while True:
@@ -140,9 +182,12 @@ def chunker_worker(name, in_q, out_q, sample_rate, chunk_seconds):
         buffer = np.concatenate([buffer, mono])
 
         while len(buffer) >= samples_needed:
+            # take a full chunk
             chunk = buffer[:samples_needed]
-            buffer = buffer[samples_needed:]
             out_q.put((name, chunk))
+
+            # keep a bit of the end of this chunk as overlap
+            buffer = buffer[samples_needed - overlap_samples:]
 
 
 # =========================
@@ -163,12 +208,22 @@ def transcriber_worker(model, in_q, language=None):
 
         audio = chunk.astype(np.float32)
 
-        segments, info = model.transcribe(
-            audio,
-            language=language,
-            beam_size=1,
-            vad_filter=True
-        )
+        if source == "mic":
+            # Mic: prioritize quality/stability
+            segments, info = model.transcribe(
+                audio,
+                language=language,
+                beam_size=5,      # more search → better accuracy
+                vad_filter=False  # avoid chopping speech on noisy mic
+            )
+        else:
+            # System: keep fast, it’s already good
+            segments, info = model.transcribe(
+                audio,
+                language=language,
+                beam_size=1,
+                vad_filter=True
+            )
 
         text = "".join(seg.text for seg in segments).strip()
         if not text:
@@ -282,7 +337,7 @@ HTML_TEMPLATE = """
       <span>Offline · System audio + Mic (Yeti)</span>
     </div>
     <div class="controls">
-      <button onclick="clearTranscripts()">Clear view</button>
+      <button type="button" onclick="clearTranscripts()">Clear view</button>
       <span id="status">Updating…</span>
     </div>
   </header>
@@ -323,12 +378,21 @@ HTML_TEMPLATE = """
       }
     }
 
-    function clearTranscripts() {
+    async function clearTranscripts() {
+      // Clear UI immediately
       document.getElementById('system').textContent = '';
       document.getElementById('mic').textContent = '';
+
+      // Clear backend transcripts
+      try {
+        await fetch('/clear', { method: 'POST' });
+      } catch (e) {
+        console.error('Failed to clear backend:', e);
+      }
     }
 
-    setInterval(fetchTranscripts, 1000);
+    // faster polling for lower perceived latency
+    setInterval(fetchTranscripts, 250);
     window.onload = fetchTranscripts;
   </script>
 </body>
@@ -347,6 +411,14 @@ def transcripts():
             "mic": mic_text,
         })
 
+@app.route("/clear", methods=["POST"])
+def clear_all():
+    global system_text, mic_text
+    with text_lock:
+        system_text = ""
+        mic_text = ""
+    return jsonify({"status": "cleared"})
+
 
 # =========================
 # STARTUP
@@ -354,11 +426,28 @@ def transcripts():
 
 def start_audio_and_model():
     print("Loading faster-whisper model...")
-    model = WhisperModel(
-        MODEL_NAME,
-        device="cpu",       # set to "cuda" if you have a GPU
-        compute_type="int8" # good for CPU
-    )
+
+    # Try preferred device first, fall back gracefully
+    model = None
+    if WHISPER_DEVICE_PREFERENCE == "cuda":
+        try:
+            model = WhisperModel(
+                MODEL_NAME,
+                device="cuda",
+                compute_type="float16",
+            )
+            print(f"Loaded model '{MODEL_NAME}' on CUDA (float16)")
+        except Exception as e:
+            print(f"CUDA failed ({e}); falling back to CPU int8")
+
+    if model is None:
+        model = WhisperModel(
+            MODEL_NAME,
+            device="cpu",
+            compute_type="int8",
+        )
+        print(f"Loaded model '{MODEL_NAME}' on CPU (int8)")
+
     print("Model loaded. Starting capture and transcription threads...")
 
     threading.Thread(target=system_audio_loop, daemon=True).start()
@@ -366,13 +455,13 @@ def start_audio_and_model():
 
     threading.Thread(
         target=chunker_worker,
-        args=("system", system_q, transcribe_q, SAMPLE_RATE, CHUNK_SECONDS),
+        args=("system", system_q, transcribe_q, SAMPLE_RATE, SYSTEM_CHUNK_SECONDS),
         daemon=True
     ).start()
 
     threading.Thread(
         target=chunker_worker,
-        args=("mic", mic_q, transcribe_q, SAMPLE_RATE, CHUNK_SECONDS),
+        args=("mic", mic_q, transcribe_q, SAMPLE_RATE, MIC_CHUNK_SECONDS),
         daemon=True
     ).start()
 
