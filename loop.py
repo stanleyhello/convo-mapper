@@ -54,9 +54,20 @@ def is_same_topic(prev,data):
     r1 = requests.post("http://localhost:3001/v1/chat/completions",data=payload1)
     r2 = requests.post("http://localhost:3001/v1/chat/completions",data=payload2)
     """
-    return response2.text == True
+    return response2.choices[0].message.text == "yes"
 
     
+def loop():
+    branches=[]
+    while True:
+        topic_data= topic(fileName,"kljsdflaklsdflkjalkdsfla")
+        query = "What is the topic of this conversation: "+topic_data
+        response = client.chat.completions.create(model="Qwen/Qwen3-0.6GB",messages = [{"role":"user","content":query}])
+        topic = response.choices[0].text.message
+        branches.append(topic)
+
+
+
 
 
         
