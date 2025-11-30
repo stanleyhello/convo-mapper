@@ -35,10 +35,10 @@ def payload_generator(query):
     "messages": [
       {
         "role": "user",
-        "content": data
+        "content":query
       }
     ],
-    "stream": true}
+    "stream": True}
 
 def is_same_topic(prev,data):
     query1 ="Hello, please store the following for later: "+prev
