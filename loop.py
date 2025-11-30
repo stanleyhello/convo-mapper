@@ -1,66 +1,101 @@
+import threading
 import time
-import pandas as pd
+
 from openai import OpenAI
 
+import main
+
+POLL_SECONDS = 1.0
+SUMMARY_INTERVAL_SECONDS = 60.0
+TOPIC_MODEL = "Qwen/Qwen3-0.6GB"
+TOPIC_PROMPT = (
+    "You are a concise topic spotter. Given up to one minute of transcript, "
+    "return a very short title (max 5 words) for the main topic. If the text "
+    "is empty or noise, return 'no speech'.\n\nTranscript:\n{transcript}\n\nTitle:"
+)
+
 client = OpenAI(
-    base_url="http://localhost:3001",
+    base_url="http://localhost:3001/v1",
     api_key="parallax",
 )
 
-FILE_PATH = "transcript.txt"
-TIME_INTERVAL_SECONDS = 120
-topics = pd.DataFrame(columns=["id", "label", "start", "end"])
+buffer_lock = threading.Lock()
+buffers = {"mic": [], "system": []}
 
 
-def topic(file_handle, prev):
-    data = []
-    start = time.time()
+def poll_transcripts():
+    """
+    Poll the shared transcripts in main.py and print any new mic/system text.
+    Also accumulate text into per-source buffers for topic summarization.
+    """
+    last_lengths = {"mic": 0, "system": 0}
+
     while True:
-        line = file_handle.readline()
-        if not line:
-            time.sleep(0.1)
+        with main.text_lock:
+            mic_text = main.mic_text
+            system_text = main.system_text
+
+        for source, text in (("mic", mic_text), ("system", system_text)):
+            if len(text) > last_lengths[source]:
+                new = text[last_lengths[source]:].strip()
+                if new:
+                    print(f"[{source}] {new}")
+                    with buffer_lock:
+                        buffers[source].append(new)
+                last_lengths[source] = len(text)
+
+        time.sleep(POLL_SECONDS)
+
+
+def topic_worker(source):
+    """
+    Every SUMMARY_INTERVAL_SECONDS, summarize the buffered text for `source`
+    via the local chat model and print the topic.
+    """
+    while True:
+        time.sleep(SUMMARY_INTERVAL_SECONDS)
+
+        with buffer_lock:
+            collected = buffers[source]
+            buffers[source] = []
+
+        transcript = " ".join(collected).strip()
+        if not transcript:
             continue
-        data.append(line)
-        if (time.time() - start) > TIME_INTERVAL_SECONDS:
-            is_same = is_same_topic(prev, data)
-            if is_same:
-                start = time.time()
-            else:
-                return data
 
+        # Keep prompt size reasonable
+        transcript = transcript[-2000:]
 
-def is_same_topic(prev, data):
-    query2 = "take the previous text and see if this text refers to the same topic. Answer either 'yes' or 'no':\n"
-    query2 += "\n".join(data)
-
-    response2 = client.chat.completions.create(
-        model="Qwen/Qwen3-0.6GB",
-        messages=[{"role": "user", "content": query2}],
-    )
-
-    # Treat any non-"yes" as a topic change to be safe
-    return response2.choices[0].message.content.strip().lower() == "yes"
+        try:
+            resp = client.chat.completions.create(
+                model=TOPIC_MODEL,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": TOPIC_PROMPT.format(transcript=transcript),
+                    }
+                ],
+            )
+            topic = resp.choices[0].message.content.strip()
+            print(f"[topic][{source}] {topic}")
+        except Exception as e:
+            print(f"[topic][{source}] error: {e}")
 
 
 def loop():
-    branches = []
-    with open(FILE_PATH, "r") as transcript:
-        while True:
-            topic_data = topic(transcript, "kljsdflaklsdflkjalkdsfla")
-            query = "What is the topic of this conversation: " + "".join(topic_data)
-            response = client.chat.completions.create(
-                model="Qwen/Qwen3-0.6GB",
-                messages=[{"role": "user", "content": query}],
-            )
-            topic_label = response.choices[0].message.content.strip()
-            print(f"Topic: {topic_label}")
-            branches.append(topic_label)
+    """
+    Designed to run alongside main.start_audio_and_model from controller.py.
+    Starts polling for new transcript text and periodic topic summaries.
+    """
+    print(
+        f"Polling transcripts every {POLL_SECONDS}s; "
+        f"summarizing every {SUMMARY_INTERVAL_SECONDS}s using {TOPIC_MODEL}"
+    )
 
+    threading.Thread(target=poll_transcripts, daemon=True).start()
+    threading.Thread(target=topic_worker, args=("mic",), daemon=True).start()
+    threading.Thread(target=topic_worker, args=("system",), daemon=True).start()
 
-
-
-
-        
-
-            
-
+    # Keep the loop alive
+    while True:
+        time.sleep(1)

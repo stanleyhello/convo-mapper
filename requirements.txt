@@ -1,0 +1,7 @@
+faster-whisper
+soundcard
+flask
+numpy
+pandas
+requests
+openai

@@ -38,18 +38,18 @@ from flask import Flask, jsonify, render_template_string
 
 SAMPLE_RATE = 16000          # target sample rate for STT
 
-# recorder buffer sizes (larger = fewer underruns)
-REC_BLOCKSIZE = 1024         # frames per read for both system and mic
+# recorder buffer sizes (larger = fewer underruns). macOS CoreAudio limits blocksize <= 512.
+REC_BLOCKSIZE = 512          # frames per read for both system and mic
 
 # separate chunk sizes
 SYSTEM_CHUNK_SECONDS = 3.0   # system audio chunks
 MIC_CHUNK_SECONDS = 4.0      # mic audio chunks (more context for accuracy)
 
-MODEL_NAME = "medium"        # "tiny"/"base" recommended for low latency
+MODEL_NAME = "small"         # "tiny"/"base"/"small" are better for CPU
 LANGUAGE = "en"              # or None for auto
 
 # Preferred device for Whisper: "cuda" (GPU) or "cpu"
-WHISPER_DEVICE_PREFERENCE = "cuda"
+WHISPER_DEVICE_PREFERENCE = "cpu"
 
 # Optional filters to force a specific device by name substring
 # e.g. "Focusrite USB Audio" or "DELL S2721Q"
@@ -96,8 +96,12 @@ def get_system_loopback_mic():
     what is being played to that speaker.
     """
     speaker = get_system_speaker()
-    loopback = sc.get_microphone(speaker.name, include_loopback=True)
-    return loopback
+    try:
+        loopback = sc.get_microphone(speaker.name, include_loopback=True)
+        return loopback
+    except Exception as e:
+        print(f"Loopback not available for '{speaker.name}': {e}")
+        return None
 
 
 def get_mic():
@@ -126,6 +130,9 @@ def system_audio_loop():
     Runs in its own thread.
     """
     loopback_mic = get_system_loopback_mic()
+    if loopback_mic is None:
+        print("Skipping system audio capture (no loopback device on macOS).")
+        return
 
     with loopback_mic.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=REC_BLOCKSIZE) as rec:
         while True:
