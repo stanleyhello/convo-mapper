@@ -31,30 +31,20 @@ import soundcard as sc
 from faster_whisper import WhisperModel
 from flask import Flask, jsonify, render_template_string
 
-
-# =========================
-# CONFIG
-# =========================
-
-SAMPLE_RATE = 16000          # target sample rate for STT
-
-# recorder buffer sizes (larger = fewer underruns). macOS CoreAudio limits blocksize <= 512.
-REC_BLOCKSIZE = 512          # frames per read for both system and mic
-
-# separate chunk sizes
-SYSTEM_CHUNK_SECONDS = 3.0   # system audio chunks
-MIC_CHUNK_SECONDS = 4.0      # mic audio chunks (more context for accuracy)
-
-MODEL_NAME = "small"         # "tiny"/"base"/"small" are better for CPU
-LANGUAGE = "en"              # or None for auto
-
-# Preferred device for Whisper: "cuda" (GPU) or "cpu"
-WHISPER_DEVICE_PREFERENCE = "cpu"
-
-# Optional filters to force a specific device by name substring
-# e.g. "Focusrite USB Audio" or "DELL S2721Q"
-SPEAKER_NAME_FILTER = None          # e.g. "Speakers (Focusrite USB Audio)"
-MIC_NAME_FILTER = "Yeti"            # prefer Yeti; falls back to default mic
+# Import centralized configuration
+from config import (
+    SAMPLE_RATE,
+    REC_BLOCKSIZE,
+    SYSTEM_CHUNK_SECONDS,
+    MIC_CHUNK_SECONDS,
+    MODEL_NAME,
+    LANGUAGE,
+    WHISPER_DEVICE_PREFERENCE,
+    SPEAKER_NAME_FILTER,
+    MIC_NAME_FILTER,
+    FLASK_HOST,
+    FLASK_PORT,
+)
 
 
 # =========================
@@ -483,4 +473,4 @@ if __name__ == "__main__":
     print("Starting local transcriber web app on http://127.0.0.1:5000")
     start_audio_and_model()
     # Disable reloader so threads aren’t started twice
-    app.run(host="127.0.0.1", port=5000, debug=False, use_reloader=False)
+    app.run(host=FLASK_HOST, port=FLASK_PORT, debug=False, use_reloader=False)

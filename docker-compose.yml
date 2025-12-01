@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  convo-mapper:
+    image: ghcr.io/stanleyhello/convo-mapper:latest
+    container_name: convo-mapper
+    devices:
+      - /dev/snd:/dev/snd
+    environment:
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+      - PARALLAX_ENDPOINT=http://host.docker.internal:3001/v1
+      - SAMPLE_RATE=16000
+      - MODEL_NAME=small
+      - MIC_NAME_FILTER=Yeti
+    volumes:
+      - /run/user/1000/pulse:/run/user/1000/pulse:ro
+      - ./transcript.txt:/app/transcript.txt
+    ports:
+      - "5000:5000"
+    network_mode: host
+    restart: unless-stopped

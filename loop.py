@@ -5,18 +5,19 @@ from openai import OpenAI
 
 import main
 
-POLL_SECONDS = 1.0
-SUMMARY_INTERVAL_SECONDS = 60.0
-TOPIC_MODEL = "Qwen/Qwen3-0.6GB"
-TOPIC_PROMPT = (
-    "You are a concise topic spotter. Given up to one minute of transcript, "
-    "return a very short title (max 5 words) for the main topic. If the text "
-    "is empty or noise, return 'no speech'.\n\nTranscript:\n{transcript}\n\nTitle:"
+# Import centralized configuration
+from config import (
+    POLL_SECONDS,
+    SUMMARY_INTERVAL_SECONDS,
+    TOPIC_MODEL,
+    TOPIC_PROMPT,
+    PARALLAX_ENDPOINT,
+    PARALLAX_API_KEY,
 )
 
 client = OpenAI(
-    base_url="http://localhost:3001/v1",
-    api_key="parallax",
+    base_url=PARALLAX_ENDPOINT,
+    api_key=PARALLAX_API_KEY,
 )
 
 buffer_lock = threading.Lock()

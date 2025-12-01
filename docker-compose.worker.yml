@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  parallax-worker:
+    image: gradientservice/parallax:latest
+    container_name: parallax-worker
+    environment:
+      - SCHEDULER_ADDRESS=${SCHEDULER_ADDRESS}
+    command: parallax join -s ${SCHEDULER_ADDRESS}
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
