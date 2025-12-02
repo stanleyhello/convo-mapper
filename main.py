@@ -53,7 +53,7 @@ WHISPER_DEVICE_PREFERENCE = "cpu"
 
 # Optional filters to force a specific device by name substring
 # e.g. "Focusrite USB Audio" or "DELL S2721Q"
-SPEAKER_NAME_FILTER = None          # e.g. "Speakers (Focusrite USB Audio)"
+SPEAKER_NAME_FILTER = "BlackHole"   # e.g. "BlackHole 2ch" virtual loopback
 MIC_NAME_FILTER = "Yeti"            # prefer Yeti; falls back to default mic
 
 
