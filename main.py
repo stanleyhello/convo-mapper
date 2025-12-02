@@ -1,6 +1,9 @@
+import json
+import os
 import time
 import queue
 import threading
+import datetime
 
 import numpy as np
 
@@ -51,10 +54,18 @@ LANGUAGE = "en"              # or None for auto
 # Preferred device for Whisper: "cuda" (GPU) or "cpu"
 WHISPER_DEVICE_PREFERENCE = "cpu"
 
+# Toggle sources
+ENABLE_SYSTEM_CAPTURE = True
+ENABLE_MIC_CAPTURE = False
+
 # Optional filters to force a specific device by name substring
 # e.g. "Focusrite USB Audio" or "DELL S2721Q"
 SPEAKER_NAME_FILTER = "BlackHole"   # e.g. "BlackHole 2ch" virtual loopback
 MIC_NAME_FILTER = "Yeti"            # prefer Yeti; falls back to default mic
+
+# Optional JSONL logging (rotated daily)
+ENABLE_TRANSCRIPT_LOG = True
+LOG_PATH_TEMPLATE = "transcript-{date}.jsonl"
 
 
 # =========================
@@ -68,6 +79,28 @@ transcribe_q = queue.Queue()
 system_text = ""
 mic_text = ""
 text_lock = threading.Lock()
+log_lock = threading.Lock()
+
+
+def _log_entry(source: str, text: str):
+    """
+    Append a transcript entry to the current day's JSONL file.
+    """
+    if not ENABLE_TRANSCRIPT_LOG or not text:
+        return
+
+    path = LOG_PATH_TEMPLATE.format(date=datetime.date.today().isoformat())
+    entry = {
+        "ts": time.time(),
+        "source": source,
+        "text": text,
+    }
+    try:
+        with log_lock, open(path, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception as e:
+        # Avoid spamming; best-effort logging
+        print(f"Warning: failed to write transcript log to {path}: {e}")
 
 
 # =========================
@@ -241,6 +274,7 @@ def transcriber_worker(model, in_q, language=None):
                 system_text += text + "\n"
             elif source == "mic":
                 mic_text += text + "\n"
+        _log_entry(source, text)
 
 
 # =========================
@@ -457,20 +491,25 @@ def start_audio_and_model():
 
     print("Model loaded. Starting capture and transcription threads...")
 
-    threading.Thread(target=system_audio_loop, daemon=True).start()
-    threading.Thread(target=mic_audio_loop, daemon=True).start()
+    if ENABLE_SYSTEM_CAPTURE:
+        threading.Thread(target=system_audio_loop, daemon=True).start()
+        threading.Thread(
+            target=chunker_worker,
+            args=("system", system_q, transcribe_q, SAMPLE_RATE, SYSTEM_CHUNK_SECONDS),
+            daemon=True
+        ).start()
+    else:
+        print("System audio capture disabled by config.")
 
-    threading.Thread(
-        target=chunker_worker,
-        args=("system", system_q, transcribe_q, SAMPLE_RATE, SYSTEM_CHUNK_SECONDS),
-        daemon=True
-    ).start()
-
-    threading.Thread(
-        target=chunker_worker,
-        args=("mic", mic_q, transcribe_q, SAMPLE_RATE, MIC_CHUNK_SECONDS),
-        daemon=True
-    ).start()
+    if ENABLE_MIC_CAPTURE:
+        threading.Thread(target=mic_audio_loop, daemon=True).start()
+        threading.Thread(
+            target=chunker_worker,
+            args=("mic", mic_q, transcribe_q, SAMPLE_RATE, MIC_CHUNK_SECONDS),
+            daemon=True
+        ).start()
+    else:
+        print("Mic audio capture disabled by config.")
 
     threading.Thread(
         target=transcriber_worker,
