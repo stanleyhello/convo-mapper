@@ -1,6 +1,7 @@
 import threading
-import main
+
 import loop
+import main
 
 thread1 = threading.Thread(target=main.start_audio_and_model)
 thread2 = threading.Thread(target=loop.loop)

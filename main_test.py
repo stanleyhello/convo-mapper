@@ -1,26 +1,25 @@
-import time
 import queue
 import threading
+import time
 
 import numpy as np
 import soundcard as sc
 from faster_whisper import WhisperModel
 from flask import Flask, jsonify, render_template_string
 
-
 # =========================
 # CONFIG
 # =========================
 
-SAMPLE_RATE = 16000          # target sample rate for STT
-CHUNK_SECONDS = 5.0          # length of audio per STT call
-MODEL_NAME = "small"         # tiny/base/small/medium/large-v3
-LANGUAGE = "en"              # or None for auto
+SAMPLE_RATE = 16000  # target sample rate for STT
+CHUNK_SECONDS = 5.0  # length of audio per STT call
+MODEL_NAME = "small"  # tiny/base/small/medium/large-v3
+LANGUAGE = "en"  # or None for auto
 
 # Optional filters to force a specific device by name substring
 # e.g. "Focusrite USB Audio" or "DELL S2721Q"
-SPEAKER_NAME_FILTER = None          # e.g. "Speakers (Focusrite USB Audio)"
-MIC_NAME_FILTER = "Yeti"            # prefer Yeti; falls back to default mic
+SPEAKER_NAME_FILTER = None  # e.g. "Speakers (Focusrite USB Audio)"
+MIC_NAME_FILTER = "Yeti"  # prefer Yeti; falls back to default mic
 
 
 # =========================
@@ -39,6 +38,7 @@ text_lock = threading.Lock()
 # =========================
 # DEVICE HELPERS
 # =========================
+
 
 def get_system_speaker():
     """
@@ -86,6 +86,7 @@ def get_mic():
 # AUDIO CAPTURE LOOPS
 # =========================
 
+
 def system_audio_loop():
     """
     Capture system audio (what you hear) via loopback microphone.
@@ -118,6 +119,7 @@ def mic_audio_loop():
 # CHUNKER WORKERS
 # =========================
 
+
 def chunker_worker(name, in_q, out_q, sample_rate, chunk_seconds):
     """
     Collect blocks from in_q, convert to mono, accumulate until
@@ -149,6 +151,7 @@ def chunker_worker(name, in_q, out_q, sample_rate, chunk_seconds):
 # TRANSCRIBER WORKER
 # =========================
 
+
 def transcriber_worker(model, in_q, language=None):
     """
     Pull (source, chunk) from in_q and run faster-whisper locally.
@@ -163,24 +166,18 @@ def transcriber_worker(model, in_q, language=None):
 
         audio = chunk.astype(np.float32)
 
-        segments, info = model.transcribe(
-            audio,
-            language=language,
-            beam_size=1,
-            vad_filter=True
-        )
+        segments, info = model.transcribe(audio, language=language, beam_size=1, vad_filter=True)
 
         text = "".join(seg.text for seg in segments).strip()
         if not text:
             continue
-        stream=open("transcript.txt","w")
-        stream.write(text+"\n")
+        stream = open("transcript.txt", "w")
+        stream.write(text + "\n")
         with text_lock:
             if source == "system":
                 system_text += text + "\n"
             elif source == "mic":
                 mic_text += text + "\n"
-        
 
 
 # =========================
@@ -337,29 +334,34 @@ HTML_TEMPLATE = """
 </html>
 """
 
+
 @app.route("/")
 def index():
     return render_template_string(HTML_TEMPLATE)
 
+
 @app.route("/transcripts")
 def transcripts():
     with text_lock:
-        return jsonify({
-            "system": system_text,
-            "mic": mic_text,
-        })
+        return jsonify(
+            {
+                "system": system_text,
+                "mic": mic_text,
+            }
+        )
 
 
 # =========================
 # STARTUP
 # =========================
 
+
 def start_audio_and_model():
     print("Loading faster-whisper model...")
     model = WhisperModel(
         MODEL_NAME,
-        device="cpu",       # set to "cuda" if you have a GPU
-        compute_type="int8" # good for CPU
+        device="cpu",  # set to "cuda" if you have a GPU
+        compute_type="int8",  # good for CPU
     )
     print("Model loaded. Starting capture and transcription threads...")
 
@@ -369,19 +371,17 @@ def start_audio_and_model():
     threading.Thread(
         target=chunker_worker,
         args=("system", system_q, transcribe_q, SAMPLE_RATE, CHUNK_SECONDS),
-        daemon=True
+        daemon=True,
     ).start()
 
     threading.Thread(
         target=chunker_worker,
         args=("mic", mic_q, transcribe_q, SAMPLE_RATE, CHUNK_SECONDS),
-        daemon=True
+        daemon=True,
     ).start()
 
     threading.Thread(
-        target=transcriber_worker,
-        args=(model, transcribe_q, LANGUAGE),
-        daemon=True
+        target=transcriber_worker, args=(model, transcribe_q, LANGUAGE), daemon=True
     ).start()
 
 

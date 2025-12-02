@@ -2,8 +2,8 @@
 Centralized configuration for convo-mapper.
 All settings can be overridden via environment variables.
 """
-import os
 
+import os
 
 # =========================
 # AUDIO CONFIGURATION

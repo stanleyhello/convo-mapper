@@ -7,12 +7,12 @@ import main
 
 # Import centralized configuration
 from config import (
+    PARALLAX_API_KEY,
+    PARALLAX_ENDPOINT,
     POLL_SECONDS,
     SUMMARY_INTERVAL_SECONDS,
     TOPIC_MODEL,
     TOPIC_PROMPT,
-    PARALLAX_ENDPOINT,
-    PARALLAX_API_KEY,
 )
 
 client = OpenAI(
@@ -38,7 +38,7 @@ def poll_transcripts():
 
         for source, text in (("mic", mic_text), ("system", system_text)):
             if len(text) > last_lengths[source]:
-                new = text[last_lengths[source]:].strip()
+                new = text[last_lengths[source] :].strip()
                 if new:
                     print(f"[{source}] {new}")
                     with buffer_lock:
