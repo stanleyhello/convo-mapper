@@ -18,6 +18,9 @@ STM_WINDOW_SECONDS = 300  # keep last 5 minutes of raw text
 MTM_MAX_LEN = 50          # keep last 30-50 summaries
 LTM_REFRESH_CHUNKS = 5    # refresh LTM every N chunks
 LTM_RECENT_SUMMARIES = 10 # how many recent summaries to feed into LTM refresh
+INTERJECT_INTERVAL_SECONDS = 60.0  # how often to consider interjecting
+INTERJECT_CONFIDENCE_THRESHOLD = float(os.getenv("INTERJECT_CONFIDENCE_THRESHOLD", 0.6))
+INTERJECT_COOLDOWN_SECONDS = float(os.getenv("INTERJECT_COOLDOWN_SECONDS", 180))
 
 MODEL_NAME = os.getenv("TOPIC_MODEL", "Qwen/Qwen3-0.6GB")
 API_MODE = os.getenv("TOPIC_API_MODE", "local")  # "local" or "openai"
@@ -57,6 +60,26 @@ TITLE_PROMPT = (
 COMPARE_PROMPT = (
     "Decide if the CURRENT summary is roughly the same topic as the PREVIOUS summary. "
     "Answer with exactly 'yes' or 'no'.\n\nPREVIOUS:\n{previous}\n\nCURRENT:\n{current}\n\nSame topic?"
+)
+
+INTERJECT_PROMPT = (
+    "You are an AI couples therapist assistant. Decide whether to gently interject right now and what to say.\n"
+    "You NEVER take sides. You prioritize de-escalation, understanding both partners, surfacing deeper emotions/needs, clarifying misunderstandings, and highlighting patterns without blame.\n\n"
+    "Available interventionType values:\n"
+    '- "none"\n'
+    '- "de_escalate"\n'
+    '- "highlight_pattern"\n'
+    '- "clarify_meaning"\n'
+    '- "reflect_deeper_emotion"\n'
+    '- "reflect_attachment_need"\n'
+    '- "teach_communication_skill"\n'
+    '- "structure_turn_taking"\n\n'
+    "LongTermPatterns:\n{ltm}\n\n"
+    "RecentSummaries:\n{mtm}\n\n"
+    "RecentDialogue:\n{stm}\n\n"
+    "Return ONLY valid JSON:\n"
+    '{{"shouldInterject": true/false, "interventionType": "...", "confidence": 0.0-1.0, '
+    '"reasons": ["..."], "candidateMessage": "..."}}'
 )
 
 if API_MODE.lower() == "openai":
@@ -125,6 +148,62 @@ def is_same_topic(prev_summary: str, current_summary: str) -> bool:
         return False
 
 
+def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
+    """
+    Run the interjection classifier/generator and return parsed decision dict.
+    """
+    mtm_lines = []
+    for item in mtm_items:
+        title = item.get("title") or ""
+        summary = item.get("summary") or ""
+        mtm_lines.append(f"- {title}: {summary}")
+    mtm_block = "\n".join(mtm_lines) or "none"
+
+    stm_block = stm_text or "none"
+    ltm_block = "\n".join(ltm_bullets) or "none"
+
+    prompt = INTERJECT_PROMPT.format(
+        ltm=ltm_block,
+        mtm=mtm_block,
+        stm=stm_block,
+    )
+
+    raw = call_chat(prompt)
+    decision = {}
+
+    try:
+        decision = json.loads(raw)
+    except Exception:
+        if "{" in raw and "}" in raw:
+            candidate = raw[raw.index("{") : raw.rindex("}") + 1]
+            try:
+                decision = json.loads(candidate)
+            except Exception:
+                decision = {}
+
+    # normalize
+    should_interject = bool(decision.get("shouldInterject", False))
+    intervention_type = str(decision.get("interventionType", "none"))
+    try:
+        confidence = float(decision.get("confidence", 0))
+    except Exception:
+        confidence = 0.0
+    reasons = decision.get("reasons", [])
+    if not isinstance(reasons, list):
+        reasons = [str(reasons)]
+    reasons = [str(r).strip() for r in reasons if str(r).strip()]
+    candidate_message = str(decision.get("candidateMessage", "")).strip()
+
+    return {
+        "shouldInterject": should_interject,
+        "interventionType": intervention_type,
+        "confidence": confidence,
+        "reasons": reasons,
+        "candidateMessage": candidate_message,
+        "raw": raw,
+    }
+
+
 def distill_ltm(recent_summaries, current_bullets):
     prompt = LTM_PROMPT.format(
         recent="\n".join(recent_summaries) or "none",
@@ -184,6 +263,19 @@ def poll_transcripts():
                 last_lengths[source] = len(text)
 
         time.sleep(POLL_SECONDS)
+
+
+def build_stm_block():
+    """
+    Construct a short text block from STM entries for prompting.
+    """
+    with memory_lock:
+        entries = list(stm)
+    lines = []
+    for item in entries:
+        ts = time.strftime("%H:%M:%S", time.localtime(item["ts"]))
+        lines.append(f"{ts} [{item['source']}]: {item['text']}")
+    return "\n".join(lines[-50:])  # cap lines to keep prompt small
 
 
 def memory_worker():
@@ -268,6 +360,55 @@ def memory_worker():
             print(f"[memory] error: {e}")
 
 
+def interject_worker():
+    """
+    Periodically decide whether to interject, based on STM/MTM/LTM.
+    """
+    last_interject_ts = 0
+
+    while True:
+        time.sleep(INTERJECT_INTERVAL_SECONDS)
+
+        stm_block = build_stm_block()
+        with memory_lock:
+            recent_mtm = list(mtm)[-LTM_RECENT_SUMMARIES:]
+            ltm_bullets = list(ltm)
+
+        decision = decide_interjection(stm_block, recent_mtm, ltm_bullets)
+
+        should = decision["shouldInterject"]
+        conf = decision["confidence"]
+        now = time.time()
+        cooldown_ok = (now - last_interject_ts) >= INTERJECT_COOLDOWN_SECONDS
+
+        if should and conf >= INTERJECT_CONFIDENCE_THRESHOLD and cooldown_ok:
+            last_interject_ts = now
+            # Log decision
+            log_memory(
+                {
+                    "type": "interjection",
+                    "ts": now,
+                    "decision": decision,
+                }
+            )
+            print(
+                f"\n[INTERJECT] type={decision['interventionType']} "
+                f"conf={conf:.2f} reasons={decision['reasons']}\n"
+                f"Message: {decision['candidateMessage']}"
+            )
+        else:
+            # Still log the decision for observability
+            log_memory(
+                {
+                    "type": "interjection",
+                    "ts": now,
+                    "decision": decision,
+                    "skipped": True,
+                    "cooldown_ok": cooldown_ok,
+                }
+            )
+
+
 def loop():
     """
     Therapy memory loop: builds STM/MTM/LTM while main.py captures audio.
@@ -275,11 +416,14 @@ def loop():
     print(
         f"Therapy memory loop using {model_name} via {API_MODE} | "
         f"STM window {STM_WINDOW_SECONDS//60}m | MTM max {MTM_MAX_LEN} | "
-        f"LTM refresh every {LTM_REFRESH_CHUNKS} chunks"
+        f"LTM refresh every {LTM_REFRESH_CHUNKS} chunks | "
+        f"Interject every {INTERJECT_INTERVAL_SECONDS}s (cooldown {INTERJECT_COOLDOWN_SECONDS}s, "
+        f"threshold {INTERJECT_CONFIDENCE_THRESHOLD})"
     )
 
     threading.Thread(target=poll_transcripts, daemon=True).start()
     threading.Thread(target=memory_worker, daemon=True).start()
+    threading.Thread(target=interject_worker, daemon=True).start()
 
     # Keep the loop alive
     while True:
