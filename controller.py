@@ -1,9 +1,10 @@
 import threading
+
 import main
-import loop
+import loop_therapy
 
 thread1 = threading.Thread(target=main.start_audio_and_model)
-thread2 = threading.Thread(target=loop.loop)
+thread2 = threading.Thread(target=loop_therapy.loop)
 
 thread1.start()
 thread2.start()
