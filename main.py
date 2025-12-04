@@ -63,7 +63,7 @@ ENABLE_MIC_CAPTURE = True
 # Optional filters to force a specific device by name substring
 # Set to None to use default/any available device
 SPEAKER_NAME_FILTER = "BlackHole"   # For system audio capture via BlackHole virtual device
-MIC_NAME_FILTER = None              # None = use any available mic (Yeti, AirPods, built-in, etc.)
+MIC_NAME_FILTER = "Akif's AirPods Pro"  # Use AirPods mic (no speaker bleed)
 
 # Optional JSONL logging (rotated daily)
 ENABLE_TRANSCRIPT_LOG = True
