@@ -1,6 +1,7 @@
 faster-whisper
 soundcard
 flask
+flask-socketio
 numpy
 pandas
 requests
