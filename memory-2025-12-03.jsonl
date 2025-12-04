@@ -1,188 +1,65 @@
 {
-  "type": "chunk",
-  "ts": 1764828392.105063,
-  "summary": "In the conversation, one person admits to making a mistake with a schedule and expresses regret, while another person named Sean assures them they didn't do anything wrong. The first person apologizes and wants to move past the issue, even though the argument has been frustrating and contentious in the past. They also acknowledge their stubbornness in previous arguments and the need for clear acknowledgment of mistakes. Despite the difficulty in the interaction, they appreciate that the other person is taking responsibility.",
-  "title": "Arguments Strengthen Marital Bonds"
-}
-
-{
   "type": "interjection",
-  "ts": 1764828442.8731031,
+  "ts": 1764833477.328749,
   "decision": {
-    "shouldInterject": true,
-    "interventionType": "teach_I_statements",
+    "shouldInterject": false,
+    "interventionType": "none",
     "confidence": 0.8,
     "reasons": [
-      "dominant use of 'you' statements",
-      "some level of blame and criticism"
+      "Dialogue is calm and reflective",
+      "Partners are aware of argument patterns"
     ],
-    "candidateMessage": "Try expressing your feelings or needs using 'I' statements instead of 'You' accusations.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": true,\n    \"youStatementsHeavy\": true,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"mutual escalation over apology dynamics\",\n    \"underlyingFeelingCandidate\": \"frustration with unresolved apology dynamics\",\n    \"unspokenNeedCandidate\": \"need for clear communication of apologies\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"teach_I_statements\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"dominant use of 'you' statements\", \"some level of blame and criticism\"],\n    \"candidateMessage\": \"Try expressing your feelings or needs using 'I' statements instead of 'You' accusations.\"\n  }\n}\n```",
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"arguments tend to happen late at night when tired\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for connection\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 0,\n    \"reasons\": [\"Dialogue is calm and reflective\", \"Partners are aware of argument patterns\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
     "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
+      "escalationLevel": 0,
+      "blameLevel": 0,
       "nameCallingPresent": false,
-      "globalCriticismPresent": true,
-      "youStatementsHeavy": true,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
       "misunderstandingLikely": false,
-      "cycleDescription": "mutual escalation over apology dynamics",
-      "underlyingFeelingCandidate": "frustration with unresolved apology dynamics",
-      "unspokenNeedCandidate": "need for clear communication of apologies"
-    }
-  }
+      "cycleDescription": "arguments tend to happen late at night when tired",
+      "underlyingFeelingCandidate": "feeling overwhelmed",
+      "unspokenNeedCandidate": "need for connection"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": false
 }
 
 {
   "type": "chunk",
-  "ts": 1764828455.197079,
-  "summary": "The transcript discusses the difference between a fight and an argument, with the speaker suggesting that an argument is productive and aimed at compromise, while a fight is emotional and personal, aimed at winning. The speaker admits that they and another person struggle with this distinction due to both being competitive and stubborn. They acknowledge the need to improve at handling such situations. The conversation shifts from accepting fault to addressing practical takeaways, though these aren't detailed in the transcript.",
-  "title": "Arguments Strengthen Marital Bonds"
+  "ts": 1764833477.3296168,
+  "summary": "The speaker discusses arguments with a spouse, noting that disputes often arise late at night after the kids are asleep. These arguments typically occur because both partners are tired, hungry, and overwhelmed, making it difficult to address issues from the day or week. Despite efforts to prevent this pattern, late night remains the most common time for their disagreements.",
+  "title": "Late-Night Spousal Disputes"
 }
 
 {
   "type": "interjection",
-  "ts": 1764828506.77524,
+  "ts": 1764833539.954637,
   "decision": {
     "shouldInterject": true,
     "interventionType": "highlight_pattern",
-    "confidence": 0.8,
-    "reasons": [
-      "mutual defensiveness is a recurring pattern",
-      "partners express a need for acknowledgment"
-    ],
-    "candidateMessage": "It seems like a cycle of mutual defensiveness and acknowledgment is present; how can you both feel more heard?",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": true,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"mutual defensiveness and need for acknowledgment\",\n    \"underlyingFeelingCandidate\": \"desire for acknowledgment\",\n    \"unspokenNeedCandidate\": \"need for mutual understanding\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"highlight_pattern\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"mutual defensiveness is a recurring pattern\", \"partners express a need for acknowledgment\"],\n    \"candidateMessage\": \"It seems like a cycle of mutual defensiveness and acknowledgment is present; how can you both feel more heard?\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": true,
-      "misunderstandingLikely": false,
-      "cycleDescription": "mutual defensiveness and need for acknowledgment",
-      "underlyingFeelingCandidate": "desire for acknowledgment",
-      "unspokenNeedCandidate": "need for mutual understanding"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764828517.089171,
-  "summary": "The speaker discusses how their approach to disagreements has improved over time. Initially, they felt the need to win arguments, which led to emotional conflicts. They have since learned to view themselves as being on the same team, rather than adversaries, which has improved their communication. This shift is particularly important given the logistical demands of family life, such as managing children's schedules.",
-  "title": "Arguments Strengthen Marital Bonds"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764828568.312363,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "none",
     "confidence": 0.9,
     "reasons": [
-      "The dialogue is calm and reflective.",
-      "There is no immediate sign of contention or escalation."
+      "Recurrence of late-night arguments when tired",
+      "Pattern of needing love and respect"
     ],
-    "candidateMessage": "",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"mutual commitment to teamwork over competition\",\n    \"underlyingFeelingCandidate\": \"none\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.9,\n    \"reasons\": [\"The dialogue is calm and reflective.\", \"There is no immediate sign of contention or escalation.\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "candidateMessage": "It sounds like your arguments often happen when you're tired at night; this cycle might be affecting how connected you feel.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"Conflicts frequently occur late at night when tired and overwhelmed\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for connection\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"highlight_pattern\",\n    \"confidence\": 0.9,\n    \"interventionValue\": 2,\n    \"reasons\": [\"Recurrence of late-night arguments when tired\", \"Pattern of needing love and respect\"],\n    \"candidateMessage\": \"It sounds like your arguments often happen when you're tired at night; this cycle might be affecting how connected you feel.\"\n  }\n}\n```",
     "analysis": {
-      "escalationLevel": 0,
+      "escalationLevel": 1,
       "blameLevel": 0,
       "nameCallingPresent": false,
       "globalCriticismPresent": false,
       "youStatementsHeavy": false,
       "misunderstandingLikely": false,
-      "cycleDescription": "mutual commitment to teamwork over competition",
-      "underlyingFeelingCandidate": "none",
-      "unspokenNeedCandidate": "none"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764828579.394782,
-  "summary": "The conversation focuses on workload balance and the importance of effective communication within a team. It discusses how individuals can feel overburdened and stressed if they perceive a lack of mutual support. The exchange also touches on how often people argue and features statistics indicating varying frequencies of arguments, with 30% of people arguing once a week or more, and only 3% claiming to never argue. The discussion is framed as hypothetical and non-emotional, with a focus on understanding different perspectives.",
-  "title": "Arguments Strengthen Marital Bonds"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764828630.4938161,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "identify_unspoken_need",
-    "confidence": 0.8,
-    "reasons": [
-      "need for mutual support is unspoken",
-      "partners focus on logistics and sharing workload"
-    ],
-    "candidateMessage": "It sounds like you both might be expressing a need for mutual support.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"mutual concern about workload\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for mutual support\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"need for mutual support is unspoken\", \"partners focus on logistics and sharing workload\"],\n    \"candidateMessage\": \"It sounds like you both might be expressing a need for mutual support.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "mutual concern about workload",
+      "cycleDescription": "Conflicts frequently occur late at night when tired and overwhelmed",
       "underlyingFeelingCandidate": "feeling overwhelmed",
-      "unspokenNeedCandidate": "need for mutual support"
-    }
-  }
-}
-
-{
-  "type": "chunk",
-  "ts": 1764828642.13991,
-  "summary": "The speaker discusses their relationship, describing both partners as strong-willed and prone to arguing, which they distinguish from fighting. They express surprise at couples who claim they never argue, questioning if they truly voice their opinions. The speaker acknowledges that while they frequently have small disagreements, actual fights are rare, occurring maybe once a year. They find it amusing to reflect on past arguments, recognizing them as irrational but personal moments driven by emotion.",
-  "title": "Arguments Strengthen Marital Bonds"
-}
-
-{
-  "type": "ltm",
-  "ts": 1764828642.13991,
-  "bullets": [
-    "Both partners are strong-willed and prone to frequent arguments, which they distinguish from fights—arguments are seen as opportunities for understanding and compromise, while fights are emotional and aimed at winning.",
-    "There is a persistent labeling dynamic: one partner is 'Miss Poutypants' for getting upset and the other is 'Mr. Stubborn' for reluctance to verbally apologize, highlighting a recurring issue of resolving disagreements and the need for genuine apologies.",
-    "The couple has been married for seven years and recognizes arguments as essential to strengthening their relationship and getting to know each other better, despite being initially seen as burdensome.",
-    "The couple struggles with the emotional competitiveness in arguments and acknowledges a need to shift mindset from adversarial to being on the same team, which has helped in logistical family demands.",
-    "There is a recurring pattern of difficulty in resolving issues before they are shared with each other, indicating a challenge in immediate and open communication, especially regarding unresolved episodes.",
-    "Despite initial emotional conflicts driven by the need to win, they have improved in handling disagreements by focusing on mutual understanding and loving perspectives.",
-    "One partner reflects on having mistaken attitudes towards errors in schedules, signifying a recurring challenge of anticipating or acknowledging personal mistakes without being contentious."
-  ]
-}
-
-{
-  "type": "interjection",
-  "ts": 1764828692.1918762,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "reflect_deeper_emotion",
-    "confidence": 0.8,
-    "reasons": [
-      "discussion of frustration",
-      "mention of emotions becoming irrational"
-    ],
-    "candidateMessage": "I hear some frustration being discussed; acknowledging these feelings can be important in understanding each other better.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"frustration\",\n    \"unspokenNeedCandidate\": \"need for understanding\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"discussion of frustration\", \"mention of emotions becoming irrational\"],\n    \"candidateMessage\": \"I hear some frustration being discussed; acknowledging these feelings can be important in understanding each other better.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "frustration",
-      "unspokenNeedCandidate": "need for understanding"
-    }
+      "unspokenNeedCandidate": "need for connection"
+    },
+    "interventionValue": 2
   },
   "skipped": true,
   "cooldown_ok": false
@@ -190,130 +67,24 @@
 
 {
   "type": "chunk",
-  "ts": 1764828709.755672,
-  "summary": "The speakers discuss their views on relationship arguments, noting that marriage therapists generally consider arguments natural and healthy. They mention that one person usually starts their arguments, and another shares his disagreement with a friend's approach of openly discussing every issue with his wife. One speaker reflects on how their life has been performance-driven, influencing their response to relationship dynamics.",
-  "title": "Arguments Strengthen Marital Bonds"
+  "ts": 1764833540.1355,
+  "summary": "The speakers discuss how their arguments have changed since having kids, noting that their most significant disagreements have arisen post-children. They attribute this to being more tired and passionate as parents, making it harder to brush off conflicts easily, unlike before having kids. Despite this increase in disagreements, both seem to prefer avoiding conflict, although one acknowledges enjoying debates, which sometimes lead to conflict.",
+  "title": "Late-Night Spousal Disputes"
 }
 
 {
   "type": "interjection",
-  "ts": 1764828756.694705,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "none",
-    "confidence": 0.8,
-    "reasons": [
-      "Conversation is calm and reflective.",
-      "No signs of misunderstanding or escalation."
-    ],
-    "candidateMessage": "",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"one starts arguments, leading to performance-driven stress\",\n    \"underlyingFeelingCandidate\": \"feeling unloved if not expressing frustration\",\n    \"unspokenNeedCandidate\": \"need for open and immediate communication\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"reasons\": [\n      \"Conversation is calm and reflective.\",\n      \"No signs of misunderstanding or escalation.\"\n    ],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "one starts arguments, leading to performance-driven stress",
-      "underlyingFeelingCandidate": "feeling unloved if not expressing frustration",
-      "unspokenNeedCandidate": "need for open and immediate communication"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764828771.458077,
-  "summary": "The speaker discusses their struggles with feeling unloved when they don't perform well, leading them quickly down negative mental paths. They emphasize the importance of receiving constructive criticism and feedback to avoid feelings of disconnection. To prevent bottled-up frustration, they prefer to address issues immediately to resolve conflicts and move forward. The speaker notes that they, along with someone named Sean, are not great at transitioning out of arguments.",
-  "title": "Arguments Strengthen Marital Bonds"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764828818.6180758,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "clarify_meaning",
-    "confidence": 0.8,
-    "reasons": [
-      "misunderstandings present",
-      "repeated clarification attempts noted"
-    ],
-    "candidateMessage": "It sounds like both of you are trying to clarify a lot; do you think there's a misunderstanding here that needs clearing up?",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": true,\n    \"cycleDescription\": \"struggle to communicate frustration leading to repeated clarification attempts\",\n    \"underlyingFeelingCandidate\": \"fear of disconnection\",\n    \"unspokenNeedCandidate\": \"need for reassurance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"clarify_meaning\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"misunderstandings present\", \"repeated clarification attempts noted\"],\n    \"candidateMessage\": \"It sounds like both of you are trying to clarify a lot; do you think there's a misunderstanding here that needs clearing up?\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": true,
-      "cycleDescription": "struggle to communicate frustration leading to repeated clarification attempts",
-      "underlyingFeelingCandidate": "fear of disconnection",
-      "unspokenNeedCandidate": "need for reassurance"
-    }
-  }
-}
-
-{
-  "type": "chunk",
-  "ts": 1764828835.008937,
-  "summary": "The conversation revolves around frequent misunderstandings in a relationship, particularly concerning body language and emotional communication. One person often feels accused of being upset, while the other insists they're not, but acknowledges their responses might suggest otherwise. They recognize their inability to effectively communicate emotions, citing examples like past experiences with stress and humorously mentioning an instance of having E. Coli. The dialogue highlights a recurring issue of perceived disconnection and an ongoing effort to improve mutual understanding.",
-  "title": "Arguments Strengthen Marital Bonds"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764828881.167008,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "clarify_meaning",
-    "confidence": 0.8,
-    "reasons": [
-      "Partners appear to misunderstand each other's cues",
-      "There is likely miscommunication about emotional states"
-    ],
-    "candidateMessage": "It sounds like you're often misinterpreting each other's cues; what might help clarify your feelings better?",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": true,\n    \"cycleDescription\": \"mutual misunderstanding and untimely communication\",\n    \"underlyingFeelingCandidate\": \"feeling disconnected\",\n    \"unspokenNeedCandidate\": \"need for clearer communication\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"clarify_meaning\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"Partners appear to misunderstand each other's cues\", \"There is likely miscommunication about emotional states\"],\n    \"candidateMessage\": \"It sounds like you're often misinterpreting each other's cues; what might help clarify your feelings better?\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": true,
-      "cycleDescription": "mutual misunderstanding and untimely communication",
-      "underlyingFeelingCandidate": "feeling disconnected",
-      "unspokenNeedCandidate": "need for clearer communication"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764828896.9425159,
-  "summary": "The speaker discusses personal communication strategies, sharing how they and Sean are working on how they frame interactions. Instead of apologizing for time spent away, such as on a recent bachelor trip for his brother, the speaker has shifted to expressing gratitude upon returning home. This change from \"I'm sorry\" to \"thank you\" has positively impacted their communication, transforming it into a more appreciative interaction. They emphasize the importance of recognizing support and teamwork in their relationship.",
-  "title": "Arguments Strengthen Marital Bonds"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764828943.537065,
+  "ts": 1764833601.94611,
   "decision": {
     "shouldInterject": true,
     "interventionType": "identify_unspoken_need",
     "confidence": 0.8,
     "reasons": [
-      "partners discuss communication methods",
-      "focus on behavior over underlying needs"
+      "unspoken need for rest identified",
+      "partners discussing difficulty finding time"
     ],
-    "candidateMessage": "It sounds like there might be an underlying need for reassurance in your interactions.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"none\",\n    \"underlyingFeelingCandidate\": \"need for open communication\",\n    \"unspokenNeedCandidate\": \"need for reassurance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"partners discuss communication methods\", \"focus on behavior over underlying needs\"],\n    \"candidateMessage\": \"It sounds like there might be an underlying need for reassurance in your interactions.\"\n  }\n}\n```",
+    "candidateMessage": "It seems like a recurring challenge is finding time for rest and communication after long days.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for rest and communication time\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"unspoken need for rest identified\", \"partners discussing difficulty finding time\"],\n    \"candidateMessage\": \"It seems like a recurring challenge is finding time for rest and communication after long days.\"\n  }\n}\n```",
     "analysis": {
       "escalationLevel": 0,
       "blameLevel": 0,
@@ -321,572 +92,18 @@
       "globalCriticismPresent": false,
       "youStatementsHeavy": false,
       "misunderstandingLikely": false,
-      "cycleDescription": "none",
-      "underlyingFeelingCandidate": "need for open communication",
-      "unspokenNeedCandidate": "need for reassurance"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764828960.0239942,
-  "summary": "The speaker describes a hypothetical situation about addressing household issues, specifically mentioning a pattern of behavior like someone not cleaning up a closet. They emphasize that they would not point out the issue immediately, but rather wait a few days until it becomes a noticeable problem. The speaker clarifies that this is not something happening in their household currently. They also mention that there's no right or wrong way to handle such situations, although they acknowledge that this approach may be seen as nitpicky.",
-  "title": "Delayed Closet Cleaning Complaints"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829006.506371,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "teach_I_statements",
-    "confidence": 0.85,
-    "reasons": [
-      "Global criticism detected",
-      "You-statements are prevalent"
-    ],
-    "candidateMessage": "Consider using 'I' statements to express your feelings about timing and issue raising more effectively.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": true,\n    \"youStatementsHeavy\": true,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"misaligned perceptions of timing and strategic issue raising\",\n    \"underlyingFeelingCandidate\": \"feeling misunderstood\",\n    \"unspokenNeedCandidate\": \"need for aligned communication strategies\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"teach_I_statements\",\n    \"confidence\": 0.85,\n    \"reasons\": [\"Global criticism detected\", \"You-statements are prevalent\"],\n    \"candidateMessage\": \"Consider using 'I' statements to express your feelings about timing and issue raising more effectively.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": true,
-      "youStatementsHeavy": true,
-      "misunderstandingLikely": false,
-      "cycleDescription": "misaligned perceptions of timing and strategic issue raising",
-      "underlyingFeelingCandidate": "feeling misunderstood",
-      "unspokenNeedCandidate": "need for aligned communication strategies"
-    }
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling overwhelmed",
+      "unspokenNeedCandidate": "need for rest and communication time"
+    },
+    "interventionValue": 2
   }
 }
 
 {
   "type": "chunk",
-  "ts": 1764829022.998003,
-  "summary": "The conversation revolves around a disagreement about when to bring up topics in a relationship, with one person, Andrew, advocating for strategically choosing the right moment. The other person feels uncertain about identifying the perfect time and asks for understanding when discussing issues. They both acknowledge that what seems intentional for one might not be for the other. The transcript ends with a mention of BetterHelp, a sponsor, which they recommend to parents and appreciate for offering online chat options.",
-  "title": "Delayed Closet Cleaning Complaints"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829068.60227,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "clarify_meaning",
-    "confidence": 0.9,
-    "reasons": [
-      "frequent misunderstandings",
-      "partners perceive timing differently"
-    ],
-    "candidateMessage": "Let's pause to understand what each of you means by 'intentional timing'.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": true,\n    \"youStatementsHeavy\": true,\n    \"misunderstandingLikely\": true,\n    \"cycleDescription\": \"one accuses, the other defends timing of issue-raising\",\n    \"underlyingFeelingCandidate\": \"feeling misunderstood\",\n    \"unspokenNeedCandidate\": \"need for understanding timing sensitivity\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"clarify_meaning\",\n    \"confidence\": 0.9,\n    \"reasons\": [\n      \"frequent misunderstandings\",\n      \"partners perceive timing differently\"\n    ],\n    \"candidateMessage\": \"Let's pause to understand what each of you means by 'intentional timing'.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": true,
-      "youStatementsHeavy": true,
-      "misunderstandingLikely": true,
-      "cycleDescription": "one accuses, the other defends timing of issue-raising",
-      "underlyingFeelingCandidate": "feeling misunderstood",
-      "unspokenNeedCandidate": "need for understanding timing sensitivity"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829085.048645,
-  "summary": "The transcript discusses the convenience and affordability of online therapy, especially for busy individuals like parents, and highlights how it allows flexible communication with a certified therapist via call, Zoom, or chat. It mentions a partnership with BetterHelp offering listeners a discount code for their first month. The speaker also shares a piece of advice from a couple named Mark and BC Ballas, emphasizing the importance of valuing your spouse's feedback, as they have a close perspective on your life.",
-  "title": "Delayed Closet Cleaning Complaints"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829130.316627,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "none",
-    "confidence": 0.7,
-    "reasons": [
-      "Dialogue is calm and reflective",
-      "Underlying need present but no conflict"
-    ],
-    "candidateMessage": "",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"need for understanding\",\n    \"unspokenNeedCandidate\": \"recognition of appropriate timing\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.7,\n    \"reasons\": [\n      \"Dialogue is calm and reflective\",\n      \"Underlying need present but no conflict\"\n    ],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "need for understanding",
-      "unspokenNeedCandidate": "recognition of appropriate timing"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829147.6660979,
-  "summary": "The speaker emphasizes the importance of using words wisely and making conscious choices regarding habits and behaviors. They discuss the responsibility of recognizing the truth in what others say, despite personal reluctance. The conversation touches on the significance of growth and adaptation as life transitions occur, such as parenting and grandparenting, suggesting an ongoing process of personal development. The emphasis is on distinguishing between good and bad habits and recognizing stylistic differences in behavior.",
-  "title": "Wise Words & Habit Choices"
-}
-
-{
-  "type": "ltm",
-  "ts": 1764829147.6660979,
-  "bullets": [
-    "Both partners are strong-willed and prone to frequent arguments, which they distinguish from fights—arguments are seen as opportunities for understanding and compromise, while fights are emotional and aimed at winning.",
-    "There is a persistent labeling dynamic: one partner is 'Miss Poutypants' for getting upset and the other is 'Mr. Stubborn' for reluctance to verbally apologize, highlighting a recurring issue of resolving disagreements and the need for genuine apologies.",
-    "The couple struggles with the emotional competitiveness in arguments and acknowledges a need to shift mindset from adversarial to being on the same team, which has helped in logistical family demands.",
-    "There is a recurring pattern of difficulty in resolving issues before they are shared with each other, indicating a challenge in immediate and open communication, especially regarding unresolved episodes.",
-    "Despite initial emotional conflicts driven by the need to win, they have improved in handling disagreements by focusing on mutual understanding and loving perspectives.",
-    "Both individuals tend to address issues immediately to resolve conflicts and move forward, but struggle with transitioning out of arguments once started.",
-    "The couple frequently experiences misunderstandings in communication, particularly regarding body language and emotional cues, leading to perceived disconnection.",
-    "One partner reflects on having mistaken attitudes towards errors in schedules, signifying a recurring challenge of anticipating or acknowledging personal mistakes without being contentious."
-  ]
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829191.800044,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "none",
-    "confidence": 0.7,
-    "reasons": [
-      "The dialogue is calm and thoughtful",
-      "No immediate patterns of conflict are present"
-    ],
-    "candidateMessage": "",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"none\",\n    \"underlyingFeelingCandidate\": \"none\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.7,\n    \"reasons\": [\"The dialogue is calm and thoughtful\", \"No immediate patterns of conflict are present\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "none",
-      "underlyingFeelingCandidate": "none",
-      "unspokenNeedCandidate": "none"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": true
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829211.9841752,
-  "summary": "The transcript discusses the importance of taking responsibility for one's actions, even if it's only a small part, in a situation. It emphasizes being the first to acknowledge one's mistakes by stepping up and admitting wrongdoings, which can foster open communication. The conversation highlights that this approach can encourage others to also own up to their contributions to a problem, promoting a more honest and accountable environment.",
-  "title": "Wise Words & Habit Choices"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829254.618634,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "teach_I_statements",
-    "confidence": 0.8,
-    "reasons": [
-      "youStatementsHeavy is true",
-      "blameLevel is 1"
-    ],
-    "candidateMessage": "Try expressing concerns with 'I feel' statements to focus on your feelings rather than your partner's actions.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": true,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unheard\",\n    \"unspokenNeedCandidate\": \"need for mutual acknowledgment\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"teach_I_statements\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"youStatementsHeavy is true\", \"blameLevel is 1\"],\n    \"candidateMessage\": \"Try expressing concerns with 'I feel' statements to focus on your feelings rather than your partner's actions.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": true,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "feeling unheard",
-      "unspokenNeedCandidate": "need for mutual acknowledgment"
-    }
-  }
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829275.621593,
-  "summary": "The speaker discusses the importance of being open to feedback in a relationship by scheduling monthly checkups with their partner, Sean, to discuss changes they would like to see. They acknowledge that this time allows them to be receptive to critique, unlike after a long day when they are tired. Additionally, they mention practicing advice from their early marriage therapy sessions, emphasizing the need to continually improve in their relationship dynamics.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829318.822012,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "clarify_meaning",
-    "confidence": 0.7,
-    "reasons": [
-      "misunderstandingLikely is true",
-      "dialogue focuses on effective listening"
-    ],
-    "candidateMessage": "It sounds like there's a risk of talking past each other. Can you clarify what you understood from each other just now?",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": true,\n    \"cycleDescription\": \"struggle with effective listening\",\n    \"underlyingFeelingCandidate\": \"need to be heard\",\n    \"unspokenNeedCandidate\": \"desire for better communication\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"clarify_meaning\",\n    \"confidence\": 0.7,\n    \"reasons\": [\"misunderstandingLikely is true\", \"dialogue focuses on effective listening\"],\n    \"candidateMessage\": \"It sounds like there's a risk of talking past each other. Can you clarify what you understood from each other just now?\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": true,
-      "cycleDescription": "struggle with effective listening",
-      "underlyingFeelingCandidate": "need to be heard",
-      "unspokenNeedCandidate": "desire for better communication"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829338.18576,
-  "summary": "The speaker discusses a strategy for improving communication during arguments with a spouse. Instead of planning a defense while the spouse is speaking, one should listen actively and then summarize what the spouse said once they finish. This approach can either confirm understanding or reveal misinterpretations, allowing for clarification. The speaker notes that this method helps de-escalate emotions and contributes to more level-headed conversations, effectively reducing conflict.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829380.6846879,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "teach_I_statements",
-    "confidence": 0.8,
-    "reasons": [
-      "use of 'you always' indicates global criticism",
-      "heavy use of 'you' statements"
-    ],
-    "candidateMessage": "Try expressing your feelings using 'I' statements to foster understanding.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": true,\n    \"youStatementsHeavy\": true,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"need for mutual understanding\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"teach_I_statements\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"use of 'you always' indicates global criticism\", \"heavy use of 'you' statements\"],\n    \"candidateMessage\": \"Try expressing your feelings using 'I' statements to foster understanding.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": true,
-      "youStatementsHeavy": true,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "need for mutual understanding",
-      "unspokenNeedCandidate": "none"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829400.556472,
-  "summary": "The conversation focuses on improving communication and managing grievances without escalating into arguments. A key point is that only one person should express their complaints at a time to prevent bickering, which is unproductive. The discussion also highlights the importance of avoiding exaggerated, blanket statements, emphasizing instead the need for precise and measured criticism, noting how exaggeration can distort reality, like claiming someone never does a task when it was only missed once.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829442.9452212,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "reflect_deeper_emotion",
-    "confidence": 0.75,
-    "reasons": [
-      "Discussing need for precision and critique",
-      "Underlying feeling of needing mutual recognition"
-    ],
-    "candidateMessage": "Could it be about needing mutual recognition in these exchanges?",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"need for mutual recognition\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.75,\n    \"reasons\": [\"Discussing need for precision and critique\", \"Underlying feeling of needing mutual recognition\"],\n    \"candidateMessage\": \"Could it be about needing mutual recognition in these exchanges?\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "need for mutual recognition",
-      "unspokenNeedCandidate": "none"
-    }
-  }
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829463.484442,
-  "summary": "The discussion focuses on the importance of using precise language in communication, especially when addressing specific issues. The speaker gives an example of telling Sean he forgot to take out the trash, rather than making a vague criticism about laziness, which helps address the actual problem. They highlight the importance of generosity in relationships and suggest that every quality exists on a spectrum, using Sean's organizational skills as an example.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829506.163955,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "identify_unspoken_need",
-    "confidence": 0.7,
-    "reasons": [
-      "Recognition of effort and qualities is emphasized",
-      "Discussion about generosity towards each other"
-    ],
-    "candidateMessage": "Have you both thought about expressing what recognition looks like for each of you?",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"need for generosity\",\n    \"unspokenNeedCandidate\": \"need for recognition\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.7,\n    \"reasons\": [\n      \"Recognition of effort and qualities is emphasized\",\n      \"Discussion about generosity towards each other\"\n    ],\n    \"candidateMessage\": \"Have you both thought about expressing what recognition looks like for each of you?\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "need for generosity",
-      "unspokenNeedCandidate": "need for recognition"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829525.4108741,
-  "summary": "The speaker acknowledges their spouse's disorganized and lazy tendencies but emphasizes their commitment to being generous in interpreting them. They humorously refer to themselves as a \"hoarder\" for accumulating more items than their partner but stress the importance of self-discipline and perspective in a marriage. The speaker underscores the necessity of generosity and commitment in their relationship, reiterating their dedication to it.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829569.293236,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "identify_unspoken_need",
-    "confidence": 0.85,
-    "reasons": [
-      "discussion about generosity",
-      "mention of commitment to marriage"
-    ],
-    "candidateMessage": "It sounds like there's a need for generosity in interpreting each other's actions.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"need for generosity\",\n    \"unspokenNeedCandidate\": \"need for generosity\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.85,\n    \"reasons\": [\"discussion about generosity\", \"mention of commitment to marriage\"],\n    \"candidateMessage\": \"It sounds like there's a need for generosity in interpreting each other's actions.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "need for generosity",
-      "unspokenNeedCandidate": "need for generosity"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829587.092572,
-  "summary": "The transcript discusses a couple's relationship challenges, emphasizing the need to improve communication and incorporate playfulness to maintain a happy marriage. It acknowledges that most arguments among couples arise from differences in needs, preferences, and topics like sex and money management. Additionally, it mentions that disagreements can occur regarding children, both before and during attempts to have them.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829632.0650702,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "identify_unspoken_need",
-    "confidence": 0.8,
-    "reasons": [
-      "need for appreciation is hinted",
-      "discussion on shared responsibilities"
-    ],
-    "candidateMessage": "Could there be an underlying need for appreciation present here?",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"tendency to argue over shared responsibilities and gratitude\",\n    \"underlyingFeelingCandidate\": \"feeling unappreciated\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"need for appreciation is hinted\", \"discussion on shared responsibilities\"],\n    \"candidateMessage\": \"Could there be an underlying need for appreciation present here?\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 1,
-      "blameLevel": 1,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "tendency to argue over shared responsibilities and gratitude",
-      "underlyingFeelingCandidate": "feeling unappreciated",
-      "unspokenNeedCandidate": "need for appreciation"
-    }
-  }
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829649.325323,
-  "summary": "The transcript discusses common topics of conflict in a relationship, such as stylistic differences in raising children, disciplining, and handling dogs before having kids. The speakers acknowledge that these issues often reveal vulnerabilities leading to defensiveness and arguments. They mention typical marriage problems like disagreements over sex, money, divisions of labor, and in-law relationships. The couple indicates that they no longer argue about their dog as much after having children.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "ltm",
-  "ts": 1764829649.325323,
-  "bullets": [
-    "Both partners are strong-willed and prone to frequent arguments, which they distinguish from fights—arguments are seen as opportunities for understanding and compromise, while fights are emotional and aimed at winning.",
-    "There is a persistent labeling dynamic: one partner is 'Miss Poutypants' for getting upset and the other is 'Mr. Stubborn' for reluctance to verbally apologize, highlighting a recurring issue of resolving disagreements and the need for genuine apologies.",
-    "The couple struggles with the emotional competitiveness in arguments and acknowledges a need to shift mindset from adversarial to being on the same team, which has helped in logistical family demands.",
-    "There is a recurring pattern of difficulty in resolving issues before they are shared with each other, indicating a challenge in immediate and open communication, especially regarding unresolved episodes.",
-    "Despite initial emotional conflicts driven by the need to win, they have improved in handling disagreements by focusing on mutual understanding and loving perspectives.",
-    "Both individuals tend to address issues immediately to resolve conflicts and move forward, but struggle with transitioning out of arguments once started.",
-    "The couple frequently experiences misunderstandings in communication, particularly regarding body language and emotional cues, leading to perceived disconnection.",
-    "One partner reflects on having mistaken attitudes towards errors in schedules, signifying a recurring challenge of anticipating or acknowledging personal mistakes without being contentious."
-  ]
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829704.148431,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "reflect_deeper_emotion",
-    "confidence": 0.8,
-    "reasons": [
-      "underlying feeling of vulnerability mentioned",
-      "discussion of acceptance phase"
-    ],
-    "candidateMessage": "It seems like feeling vulnerable and the need for acceptance might be important here.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling vulnerable\",\n    \"unspokenNeedCandidate\": \"need for acceptance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"underlying feeling of vulnerability mentioned\", \"discussion of acceptance phase\"],\n    \"candidateMessage\": \"It seems like feeling vulnerable and the need for acceptance might be important here.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "feeling vulnerable",
-      "unspokenNeedCandidate": "need for acceptance"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829730.3833559,
-  "summary": "The speaker discusses common issues couples face, such as deciding when to have children, quality time, pet peeves, jealousy, communication, work, control, and politics. They mention contemplating whether to list common arguments to reassure people that disagreements are normal. The conversation touches on the power struggle phase in relationships and how money can be a recurring source of tension. There's an indication that the speaker has compiled this list from various sources.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829766.715112,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "none",
-    "confidence": 0.9,
-    "reasons": [
-      "Conversation is calm",
-      "No signs of blame or escalation"
-    ],
-    "candidateMessage": "",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"none\",\n    \"underlyingFeelingCandidate\": \"none\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.9,\n    \"reasons\": [\"Conversation is calm\", \"No signs of blame or escalation\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "none",
-      "underlyingFeelingCandidate": "none",
-      "unspokenNeedCandidate": "none"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": false
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829792.6507158,
-  "summary": "The transcript discusses the dynamic between a saver and a spender in a family, allowing listeners to guess who fits each role. The speakers explore differing opinions on the phases of marriage and question the existence of a \"power struggle\" phase, with one person disagreeing with the notion that partners must determine who holds power. They emphasize learning to respect each other's perspectives, despite these differences.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829828.073018,
-  "decision": {
-    "shouldInterject": false,
-    "interventionType": "none",
-    "confidence": 0.8,
-    "reasons": [
-      "calm discussion",
-      "no significant conflict indicators"
-    ],
-    "candidateMessage": "",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"acceptance of differences\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"calm discussion\", \"no significant conflict indicators\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "acceptance of differences",
-      "unspokenNeedCandidate": "none"
-    }
-  },
-  "skipped": true,
-  "cooldown_ok": true
-}
-
-{
-  "type": "chunk",
-  "ts": 1764829855.826972,
-  "summary": "The transcript features a discussion about accepting differences in personal styles, specifically referencing Sean's tendency to \"pump the brakes too hard\" while driving. The speaker acknowledges that while stylistic differences can lead to disagreements, they don't always need to be changed if they remain within safe boundaries. The conversation touches on the idea of moving from a phase of conflict to one of acceptance, where differing opinions might be more easily embraced to make life smoother.",
-  "title": "'Monthly Relationship Feedback Sessions'"
-}
-
-{
-  "type": "interjection",
-  "ts": 1764829890.8639202,
-  "decision": {
-    "shouldInterject": true,
-    "interventionType": "identify_unspoken_need",
-    "confidence": 0.8,
-    "reasons": [
-      "underlyingFeelingCandidate is present",
-      "discussion about acceptance indicates unspoken need"
-    ],
-    "candidateMessage": "It seems there's a shared need for acceptance in each other's unique styles.",
-    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"need for acceptance\",\n    \"unspokenNeedCandidate\": \"need for acceptance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"reasons\": [\"underlyingFeelingCandidate is present\", \"discussion about acceptance indicates unspoken need\"],\n    \"candidateMessage\": \"It seems there's a shared need for acceptance in each other's unique styles.\"\n  }\n}\n```",
-    "analysis": {
-      "escalationLevel": 0,
-      "blameLevel": 0,
-      "nameCallingPresent": false,
-      "globalCriticismPresent": false,
-      "youStatementsHeavy": false,
-      "misunderstandingLikely": false,
-      "cycleDescription": "",
-      "underlyingFeelingCandidate": "need for acceptance",
-      "unspokenNeedCandidate": "need for acceptance"
-    }
-  }
+  "ts": 1764833602.562169,
+  "summary": "The speakers discuss their preferences between agreeing to disagree and finding a compromise. One person argues that compromise is essential in situations like financial decisions as it maintains unity. They admit that both individuals struggle with finding a balance between agreeing and compromising, but ultimately, they lean more towards compromising to make collective decisions.",
+  "title": "Late-Night Spousal Disputes"
 }
 

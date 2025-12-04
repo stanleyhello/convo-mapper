@@ -2,6 +2,7 @@ import json
 import os
 import threading
 import time
+import traceback
 from collections import deque
 
 from dotenv import load_dotenv
@@ -21,7 +22,7 @@ LTM_RECENT_SUMMARIES = 10 # how many recent summaries to feed into LTM refresh
 INTERJECT_INTERVAL_SECONDS = 60.0  # how often to consider interjecting
 INTERJECT_CONFIDENCE_THRESHOLD = float(os.getenv("INTERJECT_CONFIDENCE_THRESHOLD", 0.75))
 INTERJECT_COOLDOWN_SECONDS = float(os.getenv("INTERJECT_COOLDOWN_SECONDS", 180))
-INTERJECT_START_DELAY_SECONDS = 300  # no interjections before 5 minutes
+INTERJECT_START_DELAY_SECONDS = 0  # no interjections before 5 minutes
 TITLE_WARMUP_SECONDS = 120           # wait 2 minutes before first title
 
 MODEL_NAME = os.getenv("TOPIC_MODEL", "Qwen/Qwen3-0.6GB")
@@ -124,10 +125,24 @@ INTERJECT_PROMPT = (
     "When you DO interject:\n"
     "- Use 1 short, plain sentence (max ~25 words).\n"
     "- Be neutral and non-judgmental. Do not take sides.\n"
-    "- For repair_attempt, you may use language like: \"Would now be a good time for a brief reset?\".\n\n"
+    "- Your sentence MUST be concrete and specific:\n"
+    "  • Refer to at least one specific phrase, example, or idea from RecentDialogue or RecentSummaries\n"
+    "    (quote or paraphrase it briefly), AND\n"
+    "  • Explicitly name either a feeling, a need, or a pattern you inferred\n"
+    "    (e.g., 'feeling unloved when you don't perform well', 'fear of disconnection',\n"
+    "    'the pattern where one withdraws when the other pushes').\n"
+    "- Avoid generic statements like 'I hear some frustration' or 'It sounds like you're\n"
+    "  both trying to understand each other.' If you cannot say something concrete and\n"
+    "  new that might change the direction of the conversation, set shouldInterject=false.\n\n"
+    "Additionally, rate how much value your interjection would add right now:\n"
+    "- interventionValue: 0–3\n"
+    "  • 0 = basically generic / not helpful\n"
+    "  • 1 = mild nudge, but probably not necessary\n"
+    "  • 2 = clearly helpful and specific\n"
+    "  • 3 = very important for safety, boundaries, or major misunderstanding\n\n"
     "Return ONLY valid JSON in this exact structure:\n"
-    "{{\n"
-    "  \"analysis\": {{\n"
+    "{\n"
+    "  \"analysis\": {\n"
     "    \"escalationLevel\": 0,\n"
     "    \"blameLevel\": 0,\n"
     "    \"nameCallingPresent\": false,\n"
@@ -137,15 +152,16 @@ INTERJECT_PROMPT = (
     "    \"cycleDescription\": \"\",\n"
     "    \"underlyingFeelingCandidate\": \"\",\n"
     "    \"unspokenNeedCandidate\": \"\"\n"
-    "  }},\n"
-    "  \"intervention\": {{\n"
+    "  },\n"
+    "  \"intervention\": {\n"
     "    \"shouldInterject\": true/false,\n"
     "    \"interventionType\": \"none or one of the types above\",\n"
     "    \"confidence\": 0.0,\n"
+    "    \"interventionValue\": 0,\n"
     "    \"reasons\": [\"short reason 1\", \"short reason 2\"],\n"
     "    \"candidateMessage\": \"...\"\n"
-    "  }}\n"
-    "}}\n\n"
+    "  }\n"
+    "}\n\n"
     "LongTermPatterns:\n{ltm}\n\n"
     "RecentSummaries:\n{mtm}\n\n"
     "RecentDialogue:\n{stm}\n"
@@ -222,7 +238,7 @@ def is_same_topic(prev_summary: str, current_summary: str) -> bool:
 def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
     """
     Run the interjection classifier/generator and return parsed decision dict.
-    Now expects the model to return a nested JSON with 'analysis' and 'intervention'.
+    Expects the model to return a nested JSON with 'analysis' and 'intervention'.
     """
     mtm_lines = []
     for item in mtm_items:
@@ -234,10 +250,11 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
     stm_block = stm_text or "none"
     ltm_block = "\n".join(ltm_bullets) or "none"
 
-    prompt = INTERJECT_PROMPT.format(
-        ltm=ltm_block,
-        mtm=mtm_block,
-        stm=stm_block,
+    prompt = (
+        INTERJECT_PROMPT
+        .replace("{ltm}", ltm_block)
+        .replace("{mtm}", mtm_block)
+        .replace("{stm}", stm_block)
     )
 
     raw = call_chat(prompt)
@@ -253,9 +270,15 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
                 data = json.loads(candidate)
             except Exception:
                 data = {}
+    if not isinstance(data, dict):
+        data = {}
 
     analysis = data.get("analysis", {}) or {}
     intervention = data.get("intervention", {}) or {}
+    if not isinstance(analysis, dict):
+        analysis = {}
+    if not isinstance(intervention, dict):
+        intervention = {}
 
     allowed_types = {
         "none",
@@ -263,9 +286,9 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
         "highlight_pattern",
         "clarify_meaning",
         "reflect_deeper_emotion",
-        "reflect_attachment_need",  # legacy
-        "teach_communication_skill",  # legacy
-        "structure_turn_taking",      # legacy
+        "reflect_attachment_need",   # legacy type if it appears
+        "teach_communication_skill", # legacy
+        "structure_turn_taking",     # legacy
         "repair_attempt",
         "teach_I_statements",
         "identify_unspoken_need",
@@ -278,6 +301,12 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
         confidence = float(intervention.get("confidence", 0))
     except Exception:
         confidence = 0.0
+
+    try:
+        intervention_value = int(intervention.get("interventionValue", 0))
+    except Exception:
+        intervention_value = 0
+
     reasons = intervention.get("reasons", [])
     if not isinstance(reasons, list):
         reasons = [str(reasons)]
@@ -289,6 +318,9 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
         should_interject = False
         intervention_type = "none"
     if confidence < INTERJECT_CONFIDENCE_THRESHOLD:
+        should_interject = False
+    # require at least moderate value to reduce noise
+    if intervention_value < 2:
         should_interject = False
     if not reasons:
         should_interject = False
@@ -306,6 +338,7 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
         "candidateMessage": candidate_message,
         "raw": raw,
         "analysis": analysis,
+        "interventionValue": intervention_value,
     }
 
 
@@ -411,10 +444,11 @@ def memory_worker():
             if not summary or summary.lower() == "no speech":
                 continue
 
-            # Decide title with warmup
+            # Decide title with warmup; treat "(pending)" as not finalized
             elapsed = time.time() - start_time
             title = ""
-            if prev_title is None:
+            pending_title = prev_title == "(pending)"
+            if prev_title is None or pending_title:
                 warmup_summaries.append(summary)
                 if elapsed >= TITLE_WARMUP_SECONDS:
                     warmup_text = " ".join(warmup_summaries)
@@ -491,42 +525,54 @@ def interject_worker():
         if (time.time() - start_time) < INTERJECT_START_DELAY_SECONDS:
             continue
 
-        stm_block = build_stm_block()
-        with memory_lock:
-            recent_mtm = list(mtm)[-LTM_RECENT_SUMMARIES:]
-            ltm_bullets = list(ltm)
+        try:
+            stm_block = build_stm_block()
+            with memory_lock:
+                recent_mtm = list(mtm)[-LTM_RECENT_SUMMARIES:]
+                ltm_bullets = list(ltm)
 
-        decision = decide_interjection(stm_block, recent_mtm, ltm_bullets)
+            decision = decide_interjection(stm_block, recent_mtm, ltm_bullets)
 
-        should = decision["shouldInterject"]
-        conf = decision["confidence"]
-        now = time.time()
-        cooldown_ok = (now - last_interject_ts) >= INTERJECT_COOLDOWN_SECONDS
+            should = decision["shouldInterject"]
+            conf = decision["confidence"]
+            now = time.time()
+            cooldown_ok = (now - last_interject_ts) >= INTERJECT_COOLDOWN_SECONDS
 
-        if should and conf >= INTERJECT_CONFIDENCE_THRESHOLD and cooldown_ok:
-            last_interject_ts = now
-            # Log decision
+            if should and conf >= INTERJECT_CONFIDENCE_THRESHOLD and cooldown_ok:
+                last_interject_ts = now
+                # Log decision
+                log_memory(
+                    {
+                        "type": "interjection",
+                        "ts": now,
+                        "decision": decision,
+                    }
+                )
+                print(
+                    f"\n[INTERJECT] type={decision['interventionType']} "
+                    f"conf={conf:.2f} reasons={decision['reasons']}\n"
+                    f"Message: {decision['candidateMessage']}"
+                )
+            else:
+                # Still log the decision for observability
+                log_memory(
+                    {
+                        "type": "interjection",
+                        "ts": now,
+                        "decision": decision,
+                        "skipped": True,
+                        "cooldown_ok": cooldown_ok,
+                    }
+                )
+        except Exception as e:
+            now = time.time()
+            print(f"[interject] error: {e}")
             log_memory(
                 {
-                    "type": "interjection",
+                    "type": "interjection_error",
                     "ts": now,
-                    "decision": decision,
-                }
-            )
-            print(
-                f"\n[INTERJECT] type={decision['interventionType']} "
-                f"conf={conf:.2f} reasons={decision['reasons']}\n"
-                f"Message: {decision['candidateMessage']}"
-            )
-        else:
-            # Still log the decision for observability
-            log_memory(
-                {
-                    "type": "interjection",
-                    "ts": now,
-                    "decision": decision,
-                    "skipped": True,
-                    "cooldown_ok": cooldown_ok,
+                    "error": str(e),
+                    "traceback": traceback.format_exc(),
                 }
             )
 
