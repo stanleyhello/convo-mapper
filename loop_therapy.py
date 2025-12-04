@@ -16,11 +16,13 @@ POLL_SECONDS = 1.0
 SUMMARY_INTERVAL_SECONDS = 60.0
 STM_WINDOW_SECONDS = 300  # keep last 5 minutes of raw text
 MTM_MAX_LEN = 50          # keep last 30-50 summaries
-LTM_REFRESH_CHUNKS = 5    # refresh LTM every N chunks
+LTM_REFRESH_CHUNKS = 8    # refresh LTM every N chunks (less churn)
 LTM_RECENT_SUMMARIES = 10 # how many recent summaries to feed into LTM refresh
 INTERJECT_INTERVAL_SECONDS = 60.0  # how often to consider interjecting
-INTERJECT_CONFIDENCE_THRESHOLD = float(os.getenv("INTERJECT_CONFIDENCE_THRESHOLD", 0.6))
+INTERJECT_CONFIDENCE_THRESHOLD = float(os.getenv("INTERJECT_CONFIDENCE_THRESHOLD", 0.75))
 INTERJECT_COOLDOWN_SECONDS = float(os.getenv("INTERJECT_COOLDOWN_SECONDS", 180))
+INTERJECT_START_DELAY_SECONDS = 300  # no interjections before 5 minutes
+TITLE_WARMUP_SECONDS = 120           # wait 2 minutes before first title
 
 MODEL_NAME = os.getenv("TOPIC_MODEL", "Qwen/Qwen3-0.6GB")
 API_MODE = os.getenv("TOPIC_API_MODE", "local")  # "local" or "openai"
@@ -32,8 +34,8 @@ MEMORY_LOG_ENABLED = True
 MEMORY_LOG_TEMPLATE = "memory-{date}.jsonl"
 
 SUMMARY_PROMPT = (
-    "Summarize this transcript chunk in one paragraph (2-3 sentences, max 80 words). "
-    "Keep it concise and factual. If empty or noise, return 'no speech'.\n\n"
+    "Summarize this transcript chunk in one paragraph (max 4 sentences). "
+    "Use plain, concrete language; include specific details; avoid fluff. If empty or noise, return 'no speech'.\n\n"
     "Transcript:\n{transcript}\n\nSummary:"
 )
 
@@ -46,14 +48,17 @@ LTM_PROMPT = (
     "• Only store patterns that are persistent, repeated, or emotionally core (attachment needs, stable communication styles, enduring conflict cycles).\n"
     "• Merge similar items instead of duplicating them.\n"
     "• Remove items only if RECENT strongly contradicts them.\n"
+    "• Keep bullets concrete and specific to recurring issues (e.g., late-night money fights, repeated timing conflicts), avoid generic communication advice.\n"
+    "• If no new recurring issue appears, keep bullets unchanged.\n"
     "• Output a maximum of 8 refined bullets representing long-term themes.\n\n"
     "Return ONLY valid JSON:\n{{\"bullets\": [\"...\", \"...\"]}}\n\n"
     "RECENT:\n{recent}\n\nCURRENT:\n{current}"
 )
 
 TITLE_PROMPT = (
-    "You are a concise topic spotter. Given this summary, return a very short "
-    "title (max 5 words) for the main topic. If empty or noise, return 'no speech'.\n\n"
+    "You are a concise topic spotter. Given this summary, return a short, concrete "
+    "title (max 5 words) that mentions the specific issue (e.g., 'Late-night money fights'). "
+    "Avoid generic labels. If empty or noise, return 'no speech'.\n\n"
     "Summary:\n{summary}\n\nTitle:"
 )
 
@@ -63,23 +68,87 @@ COMPARE_PROMPT = (
 )
 
 INTERJECT_PROMPT = (
-    "You are an AI couples therapist assistant. Decide whether to gently interject right now and what to say.\n"
-    "You NEVER take sides. You prioritize de-escalation, understanding both partners, surfacing deeper emotions/needs, clarifying misunderstandings, and highlighting patterns without blame.\n\n"
-    "Available interventionType values:\n"
-    '- "none"\n'
-    '- "de_escalate"\n'
-    '- "highlight_pattern"\n'
-    '- "clarify_meaning"\n'
-    '- "reflect_deeper_emotion"\n'
-    '- "reflect_attachment_need"\n'
-    '- "teach_communication_skill"\n'
-    '- "structure_turn_taking"\n\n'
+    "You are an AI couples therapist assistant.\n"
+    "You are given:\n"
+    "- LongTermPatterns: persistent themes for this couple\n"
+    "- RecentSummaries: recent 60s summaries\n"
+    "- RecentDialogue: the last few minutes of raw dialogue\n\n"
+    "Your job has TWO steps:\n\n"
+    "STEP 1 – ANALYZE:\n"
+    "Infer the following about the RecentDialogue:\n"
+    "- escalationLevel: 0–3 (0=calm, 1=tense, 2=escalating, 3=very heated)\n"
+    "- blameLevel: 0–3 (0=none, 1=some blame, 2=strong blame, 3=attacks)\n"
+    "- nameCallingPresent: true/false (insults, contempt, character attacks)\n"
+    "- globalCriticismPresent: true/false (phrases like 'you always', 'you never',\n"
+    "  or global negative judgments about the person)\n"
+    "- youStatementsHeavy: true/false (dominant use of 'you' accusations vs 'I' statements)\n"
+    "- misunderstandingLikely: true/false (partners talking past each other,\n"
+    "  responding to different issues or meanings)\n"
+    "- cycleDescription: short description (if any recurring interaction pattern\n"
+    "  appears, e.g., 'one pursues, the other shuts down', or 'mutual escalation')\n"
+    "- underlyingFeelingCandidate: short phrase for the deeper vulnerable feeling\n"
+    "  if any (e.g., 'feeling unimportant', 'fear of rejection'); else 'none'\n"
+    "- unspokenNeedCandidate: short phrase for an underlying need if any\n"
+    "  (e.g., 'need for reassurance', 'need for appreciation'); else 'none'\n\n"
+    "STEP 2 – DECIDE WHETHER TO INTERJECT:\n"
+    "You may choose exactly one of the following interventionType values:\n"
+    '- \"none\"\n'
+    '- \"reflect_deeper_emotion\"      (Highlighting underlying feelings)\n'
+    '- \"highlight_pattern\"           (Naming the interaction pattern/cycle)\n'
+    '- \"de_escalate\"                 (Slowing down escalation)\n'
+    '- \"repair_attempt\"              (Suggest brief reset or small repair)\n'
+    '- \"teach_I_statements\"          (Guiding I-statements)\n'
+    '- \"clarify_meaning\"             (Addressing misunderstandings)\n'
+    '- \"identify_unspoken_need\"      (Identifying unspoken needs)\n'
+    '- \"boundary_setting\"            (Promoting respectful communication)\n\n'
+    "Use these guidelines:\n"
+    "- Choose \"boundary_setting\" when nameCallingPresent or globalCriticismPresent\n"
+    "  is true, or blameLevel >= 2 with strong personal attacks.\n"
+    "- Choose \"teach_I_statements\" when youStatementsHeavy is true and blameLevel >= 1\n"
+    "  but there is no severe name-calling.\n"
+    "- Choose \"de_escalate\" when escalationLevel >= 2 (heated) even if there is\n"
+    "  no name-calling yet.\n"
+    "- Choose \"repair_attempt\" when escalationLevel is 1–2 and there has been\n"
+    "  tension, but the conversation is still workable. Use language like\n"
+    "  'Would now be a good time for a brief reset?'.\n"
+    "- Choose \"reflect_deeper_emotion\" when underlyingFeelingCandidate is not 'none'\n"
+    "  and there is repeated frustration or hurt.\n"
+    "- Choose \"identify_unspoken_need\" when unspokenNeedCandidate is not 'none'\n"
+    "  and the partners are arguing about behavior instead of the underlying need.\n"
+    "- Choose \"highlight_pattern\" when a clear cycleDescription is present and is\n"
+    "  contributing to the conflict.\n"
+    "- Choose \"clarify_meaning\" when misunderstandingLikely is true.\n"
+    "- If multiple apply, pick the one that best promotes safety and understanding\n"
+    "  in this moment (boundary_setting > de_escalate > repair_attempt > others).\n"
+    "- If nothing clearly applies or your confidence is low, use interventionType=\"none\".\n\n"
+    "When you DO interject:\n"
+    "- Use 1 short, plain sentence (max ~25 words).\n"
+    "- Be neutral and non-judgmental. Do not take sides.\n"
+    "- For repair_attempt, you may use language like: \"Would now be a good time for a brief reset?\".\n\n"
+    "Return ONLY valid JSON in this exact structure:\n"
+    "{{\n"
+    "  \"analysis\": {{\n"
+    "    \"escalationLevel\": 0,\n"
+    "    \"blameLevel\": 0,\n"
+    "    \"nameCallingPresent\": false,\n"
+    "    \"globalCriticismPresent\": false,\n"
+    "    \"youStatementsHeavy\": false,\n"
+    "    \"misunderstandingLikely\": false,\n"
+    "    \"cycleDescription\": \"\",\n"
+    "    \"underlyingFeelingCandidate\": \"\",\n"
+    "    \"unspokenNeedCandidate\": \"\"\n"
+    "  }},\n"
+    "  \"intervention\": {{\n"
+    "    \"shouldInterject\": true/false,\n"
+    "    \"interventionType\": \"none or one of the types above\",\n"
+    "    \"confidence\": 0.0,\n"
+    "    \"reasons\": [\"short reason 1\", \"short reason 2\"],\n"
+    "    \"candidateMessage\": \"...\"\n"
+    "  }}\n"
+    "}}\n\n"
     "LongTermPatterns:\n{ltm}\n\n"
     "RecentSummaries:\n{mtm}\n\n"
-    "RecentDialogue:\n{stm}\n\n"
-    "Return ONLY valid JSON:\n"
-    '{{"shouldInterject": true/false, "interventionType": "...", "confidence": 0.0-1.0, '
-    '"reasons": ["..."], "candidateMessage": "..."}}'
+    "RecentDialogue:\n{stm}\n"
 )
 
 if API_MODE.lower() == "openai":
@@ -104,6 +173,8 @@ mtm = deque(maxlen=MTM_MAX_LEN)  # list of {"ts", "summary"}
 ltm = []  # list of bullet strings
 chunk_buffer = []  # raw strings collected since last summary
 log_lock = threading.Lock()
+start_time = time.time()
+warmup_summaries = []
 
 
 def log_memory(entry: dict):
@@ -151,6 +222,7 @@ def is_same_topic(prev_summary: str, current_summary: str) -> bool:
 def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
     """
     Run the interjection classifier/generator and return parsed decision dict.
+    Now expects the model to return a nested JSON with 'analysis' and 'intervention'.
     """
     mtm_lines = []
     for item in mtm_items:
@@ -169,30 +241,62 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
     )
 
     raw = call_chat(prompt)
-    decision = {}
+    data = {}
 
     try:
-        decision = json.loads(raw)
+        data = json.loads(raw)
     except Exception:
+        # Best-effort bracket extraction if LLM wrapped JSON in extra text
         if "{" in raw and "}" in raw:
             candidate = raw[raw.index("{") : raw.rindex("}") + 1]
             try:
-                decision = json.loads(candidate)
+                data = json.loads(candidate)
             except Exception:
-                decision = {}
+                data = {}
 
-    # normalize
-    should_interject = bool(decision.get("shouldInterject", False))
-    intervention_type = str(decision.get("interventionType", "none"))
+    analysis = data.get("analysis", {}) or {}
+    intervention = data.get("intervention", {}) or {}
+
+    allowed_types = {
+        "none",
+        "de_escalate",
+        "highlight_pattern",
+        "clarify_meaning",
+        "reflect_deeper_emotion",
+        "reflect_attachment_need",  # legacy
+        "teach_communication_skill",  # legacy
+        "structure_turn_taking",      # legacy
+        "repair_attempt",
+        "teach_I_statements",
+        "identify_unspoken_need",
+        "boundary_setting",
+    }
+
+    should_interject = bool(intervention.get("shouldInterject", False))
+    intervention_type = str(intervention.get("interventionType", "none"))
     try:
-        confidence = float(decision.get("confidence", 0))
+        confidence = float(intervention.get("confidence", 0))
     except Exception:
         confidence = 0.0
-    reasons = decision.get("reasons", [])
+    reasons = intervention.get("reasons", [])
     if not isinstance(reasons, list):
         reasons = [str(reasons)]
     reasons = [str(r).strip() for r in reasons if str(r).strip()]
-    candidate_message = str(decision.get("candidateMessage", "")).strip()
+    candidate_message = str(intervention.get("candidateMessage", "")).strip()
+
+    # enforce constraints
+    if intervention_type not in allowed_types:
+        should_interject = False
+        intervention_type = "none"
+    if confidence < INTERJECT_CONFIDENCE_THRESHOLD:
+        should_interject = False
+    if not reasons:
+        should_interject = False
+    if should_interject and intervention_type == "none":
+        should_interject = False
+    # keep message short
+    if len(candidate_message.split()) > 30:
+        candidate_message = " ".join(candidate_message.split()[:30])
 
     return {
         "shouldInterject": should_interject,
@@ -201,6 +305,7 @@ def decide_interjection(stm_text: str, mtm_items, ltm_bullets):
         "reasons": reasons,
         "candidateMessage": candidate_message,
         "raw": raw,
+        "analysis": analysis,
     }
 
 
@@ -306,15 +411,29 @@ def memory_worker():
             if not summary or summary.lower() == "no speech":
                 continue
 
-            # Decide title and topic continuity
-            same = False
-            if prev_summary:
-                same = is_same_topic(prev_summary, summary)
-
-            if same and prev_title:
-                title = prev_title
+            # Decide title with warmup
+            elapsed = time.time() - start_time
+            title = ""
+            if prev_title is None:
+                warmup_summaries.append(summary)
+                if elapsed >= TITLE_WARMUP_SECONDS:
+                    warmup_text = " ".join(warmup_summaries)
+                    title = generate_title_from_summary(warmup_text)
+                    prev_title = title
+                    prev_summary = summary
+                else:
+                    title = "(pending)"
             else:
-                title = generate_title_from_summary(summary)
+                # normal flow
+                same = False
+                if prev_summary:
+                    same = is_same_topic(prev_summary, summary)
+                if same and prev_title:
+                    title = prev_title
+                else:
+                    title = generate_title_from_summary(summary)
+                prev_summary = summary
+                prev_title = title
 
             ts = time.time()
             with memory_lock:
@@ -368,6 +487,9 @@ def interject_worker():
 
     while True:
         time.sleep(INTERJECT_INTERVAL_SECONDS)
+
+        if (time.time() - start_time) < INTERJECT_START_DELAY_SECONDS:
+            continue
 
         stm_block = build_stm_block()
         with memory_lock:
