@@ -480,7 +480,7 @@ HTML_TEMPLATE = """
     }
     
     .card-header {
-      padding: 0.875rem 1rem;
+      padding: 0.625rem 0.75rem;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -659,15 +659,15 @@ HTML_TEMPLATE = """
     .insights-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 1rem;
+      gap: 0.75rem;
     }
     
-    .insights-main { display: flex; flex-direction: column; gap: 1rem; }
-    .insights-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+    .insights-main { display: flex; flex-direction: column; gap: 0.75rem; }
+    .insights-sidebar { display: flex; flex-direction: column; gap: 0.75rem; }
     
     /* Summary items */
     .summary-item {
-      padding: 1rem;
+      padding: 0.5rem 0.75rem;
       border-bottom: 1px solid var(--border);
       transition: background 0.2s;
     }
@@ -676,55 +676,56 @@ HTML_TEMPLATE = """
     .summary-item:hover { background: var(--bg-card-hover); }
     
     .summary-time {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.125rem;
     }
     
     .summary-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--text-primary);
-      margin-bottom: 0.375rem;
+      margin-bottom: 0.2rem;
     }
     
     .summary-text {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.4;
     }
     
     /* LTM bullets */
     .ltm-list {
       list-style: none;
-      padding: 1rem;
+      padding: 0.5rem 0.75rem;
     }
     
     .ltm-item {
-      padding: 0.625rem 0;
-      font-size: 0.8rem;
+      padding: 0.4rem 0;
+      font-size: 0.75rem;
       color: var(--text-secondary);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: flex-start;
-      gap: 0.625rem;
+      gap: 0.5rem;
+      line-height: 1.4;
     }
     
     .ltm-item:last-child { border-bottom: none; }
     
     .ltm-bullet {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       background: var(--accent);
       border-radius: 50%;
-      margin-top: 0.5rem;
+      margin-top: 0.4rem;
       flex-shrink: 0;
     }
     
     /* Interjection cards */
     .interject-item {
-      padding: 1rem;
+      padding: 0.5rem 0.75rem;
       border-bottom: 1px solid var(--border);
     }
     
@@ -734,11 +735,11 @@ HTML_TEMPLATE = """
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
     
     .interject-type {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -746,15 +747,15 @@ HTML_TEMPLATE = """
     }
     
     .interject-conf {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
     }
     
     .interject-msg {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-primary);
-      line-height: 1.5;
+      line-height: 1.4;
       font-style: italic;
     }
     
