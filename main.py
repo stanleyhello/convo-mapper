@@ -201,7 +201,7 @@ def system_audio_loop():
         dev = get_system_loopback_mic()
         if dev is None:
             print("Skipping system audio (no device).", flush=True)
-        return
+            return
         print(f"[SYSTEM] Ready: {dev.name}", flush=True)
         with dev.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=REC_BLOCKSIZE_SYSTEM) as rec:
             while True:
@@ -1649,8 +1649,8 @@ def start_audio_and_model():
 
 
 if __name__ == "__main__":
-    print("Starting local transcriber web app on http://127.0.0.1:5000")
+    print("Starting local transcriber web app on http://127.0.0.1:5001")
     start_audio_and_model()
     # Disable reloader so threads aren’t started twice
-    app.run(host="127.0.0.1", port=5000, debug=False, use_reloader=False)
+    app.run(host="127.0.0.1", port=5001, debug=False, use_reloader=False)
 
