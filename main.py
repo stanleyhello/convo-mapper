@@ -87,6 +87,7 @@ log_lock = threading.Lock()
 recording_enabled = False
 system_capture_enabled = True
 mic_capture_enabled = True
+therapy_mode_enabled = False
 state_lock = threading.Lock()
 
 
@@ -513,10 +514,10 @@ HTML_TEMPLATE = """
     }
     
     .card-body {
-      padding: 1rem;
+      padding: 0.5rem;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
-      line-height: 1.6;
+      line-height: 1.5;
       color: var(--text-secondary);
       max-height: 400px;
       overflow-y: auto;
@@ -667,7 +668,7 @@ HTML_TEMPLATE = """
     
     /* Summary items */
     .summary-item {
-      padding: 0.5rem 0.75rem;
+      padding: 0.35rem 0.5rem;
       border-bottom: 1px solid var(--border);
       transition: background 0.2s;
     }
@@ -679,20 +680,21 @@ HTML_TEMPLATE = """
       font-size: 0.65rem;
       color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
-      margin-bottom: 0.125rem;
+      margin-bottom: 0;
     }
     
     .summary-title {
       font-size: 0.85rem;
       font-weight: 500;
       color: var(--text-primary);
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.1rem;
     }
     
     .summary-text {
       font-size: 0.75rem;
       color: var(--text-secondary);
-      line-height: 1.4;
+      line-height: 1.35;
+      margin: 0;
     }
     
     /* LTM bullets */
@@ -725,7 +727,7 @@ HTML_TEMPLATE = """
     
     /* Interjection cards */
     .interject-item {
-      padding: 0.5rem 0.75rem;
+      padding: 0.35rem 0.5rem;
       border-bottom: 1px solid var(--border);
     }
     
@@ -735,7 +737,7 @@ HTML_TEMPLATE = """
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.1rem;
     }
     
     .interject-type {
@@ -755,8 +757,9 @@ HTML_TEMPLATE = """
     .interject-msg {
       font-size: 0.8rem;
       color: var(--text-primary);
-      line-height: 1.4;
+      line-height: 1.35;
       font-style: italic;
+      margin: 0;
     }
     
     /* Report tab */
@@ -940,18 +943,18 @@ HTML_TEMPLATE = """
     /* Empty states */
     .empty-state {
       text-align: center;
-      padding: 3rem 1rem;
+      padding: 1.5rem 1rem;
       color: var(--text-muted);
     }
     
     .empty-state-icon {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
       opacity: 0.5;
     }
     
     .empty-state-text {
-      font-size: 0.875rem;
+      font-size: 0.8rem;
     }
     
     /* Responsive */
@@ -963,6 +966,88 @@ HTML_TEMPLATE = """
         grid-template-columns: 1fr;
       }
     }
+    
+    /* Therapy Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 360px;
+    }
+    
+    .toast {
+      background: var(--bg-card);
+      border: 1px solid var(--warning);
+      border-left: 3px solid var(--warning);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: slideIn 0.3s ease;
+      cursor: pointer;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    
+    .toast:hover { transform: translateX(-4px); }
+    .toast.hiding { opacity: 0; transform: translateX(100%); }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .toast-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    
+    .toast-type {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--warning);
+    }
+    
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      line-height: 1;
+    }
+    
+    .toast-message {
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    
+    .toast-conf {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    
+    /* Therapy toggle special styling */
+    .therapy-toggle {
+      margin-left: auto;
+      background: rgba(234, 179, 8, 0.1);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    
+    .therapy-toggle.active { border-color: var(--warning); }
+    .therapy-toggle .control-label { color: var(--warning); font-weight: 500; }
   </style>
 </head>
 <body>
@@ -1002,7 +1087,14 @@ HTML_TEMPLATE = """
       <span class="control-label">Microphone</span>
       <div id="toggleMic" class="toggle-switch active" onclick="toggleMic()"></div>
     </div>
+    
+    <div class="control-group therapy-toggle" id="therapyToggleGroup">
+      <span class="control-label">🧠 Therapy Mode</span>
+      <div id="toggleTherapy" class="toggle-switch" onclick="toggleTherapy()"></div>
       </div>
+  </div>
+  
+  <div class="toast-container" id="toastContainer"></div>
   
   <main>
     <!-- LIVE TAB -->
@@ -1303,6 +1395,8 @@ HTML_TEMPLATE = """
     let isRecording = false;
     let systemEnabled = true;
     let micEnabled = true;
+    let therapyEnabled = false;
+    let lastInterjectionTs = 0;
     
     async function toggleRecording() {
       const btn = document.getElementById('recordBtn');
@@ -1339,6 +1433,63 @@ HTML_TEMPLATE = """
       toggle.classList.toggle('active', micEnabled);
     }
     
+    async function toggleTherapy() {
+      const res = await fetch('/api/toggle/therapy', { method: 'POST' });
+      const data = await res.json();
+      therapyEnabled = data.therapy_enabled;
+      const toggle = document.getElementById('toggleTherapy');
+      const group = document.getElementById('therapyToggleGroup');
+      toggle.classList.toggle('active', therapyEnabled);
+      group.classList.toggle('active', therapyEnabled);
+    }
+    
+    // Toast notifications
+    function showToast(type, message, confidence) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <div class="toast-header">
+          <span class="toast-type">${escapeHtml(type.replace(/_/g, ' '))}</span>
+          <button class="toast-close" onclick="dismissToast(this.parentElement.parentElement)">&times;</button>
+        </div>
+        <div class="toast-message">"${escapeHtml(message)}"</div>
+        <div class="toast-conf">${(confidence * 100).toFixed(0)}% confidence</div>
+      `;
+      container.appendChild(toast);
+      
+      // Auto-dismiss after 12 seconds
+      setTimeout(() => dismissToast(toast), 12000);
+    }
+    
+    function dismissToast(toast) {
+      if (!toast || !toast.parentElement) return;
+      toast.classList.add('hiding');
+      setTimeout(() => toast.remove(), 300);
+    }
+    
+    // Poll for new interjections when therapy mode is on
+    async function checkInterjections() {
+      if (!therapyEnabled) return;
+      
+      try {
+        const res = await fetch('/api/insights');
+        const data = await res.json();
+        
+        if (data.interjections && data.interjections.length > 0) {
+          // Show new interjections as toasts
+          for (const i of data.interjections) {
+            if (i.ts > lastInterjectionTs && !i.skipped) {
+              showToast(i.type, i.message, i.confidence);
+              lastInterjectionTs = i.ts;
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Failed to check interjections:', e);
+      }
+    }
+    
     // Fetch initial recording status
     async function fetchRecordingStatus() {
       try {
@@ -1347,6 +1498,7 @@ HTML_TEMPLATE = """
         isRecording = data.recording;
         systemEnabled = data.system_enabled;
         micEnabled = data.mic_enabled;
+        therapyEnabled = data.therapy_enabled;
         
         const btn = document.getElementById('recordBtn');
         const btnText = document.getElementById('recordBtnText');
@@ -1358,6 +1510,8 @@ HTML_TEMPLATE = """
         
         document.getElementById('toggleSystem').classList.toggle('active', systemEnabled);
         document.getElementById('toggleMic').classList.toggle('active', micEnabled);
+        document.getElementById('toggleTherapy').classList.toggle('active', therapyEnabled);
+        document.getElementById('therapyToggleGroup').classList.toggle('active', therapyEnabled);
       } catch (e) {
         console.error('Failed to fetch recording status:', e);
       }
@@ -1365,6 +1519,7 @@ HTML_TEMPLATE = """
     
     // Polling
     setInterval(fetchTranscripts, 300);
+    setInterval(checkInterjections, 5000);
     fetchTranscripts();
     fetchRecordingStatus();
   </script>
@@ -1415,7 +1570,8 @@ def get_recording_status():
         return jsonify({
             "recording": recording_enabled,
             "system_enabled": system_capture_enabled,
-            "mic_enabled": mic_capture_enabled
+            "mic_enabled": mic_capture_enabled,
+            "therapy_enabled": therapy_mode_enabled
         })
 
 
@@ -1433,6 +1589,20 @@ def toggle_mic():
     with state_lock:
         mic_capture_enabled = not mic_capture_enabled
         return jsonify({"mic_enabled": mic_capture_enabled})
+
+
+@app.route("/api/toggle/therapy", methods=["POST"])
+def toggle_therapy():
+    global therapy_mode_enabled
+    with state_lock:
+        therapy_mode_enabled = not therapy_mode_enabled
+        return jsonify({"therapy_enabled": therapy_mode_enabled})
+
+
+@app.route("/api/therapy/status")
+def get_therapy_status():
+    with state_lock:
+        return jsonify({"therapy_enabled": therapy_mode_enabled})
 
 
 def _read_memory_log():

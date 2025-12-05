@@ -1,7 +1,7 @@
 import threading
 
 import main
-import loop_normal
+import loop_therapy
 
 def run_flask():
     """Run the Flask web server."""
@@ -9,7 +9,7 @@ def run_flask():
     main.app.run(host="127.0.0.1", port=5001, debug=False, use_reloader=False)
 
 thread1 = threading.Thread(target=main.start_audio_and_model)
-thread2 = threading.Thread(target=loop_normal.loop)
+thread2 = threading.Thread(target=loop_therapy.loop)
 thread3 = threading.Thread(target=run_flask)
 
 thread1.start()
