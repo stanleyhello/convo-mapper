@@ -62,7 +62,7 @@ ENABLE_MIC_CAPTURE = True
 
 # Optional filters to force a specific device by name substring
 # Set to None to use default/any available device
-SPEAKER_NAME_FILTER = "BlackHole"   # For system audio capture via BlackHole virtual device
+SPEAKER_NAME_FILTER = "BlackHole 2ch"   # For system audio capture via BlackHole virtual device
 MIC_NAME_FILTER = "Akif's AirPods Pro"  # Use AirPods mic (no speaker bleed)
 
 # Optional JSONL logging (rotated daily)
@@ -201,7 +201,7 @@ def system_audio_loop():
         dev = get_system_loopback_mic()
         if dev is None:
             print("Skipping system audio (no device).", flush=True)
-            return
+        return
         print(f"[SYSTEM] Ready: {dev.name}", flush=True)
         with dev.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=REC_BLOCKSIZE_SYSTEM) as rec:
             while True:
@@ -226,13 +226,11 @@ def mic_audio_loop():
             while True:
                 data = rec.record(numframes=REC_BLOCKSIZE_MIC)
                 with state_lock:
-                    if recording_enabled and mic_capture_enabled:
-                        timestamp = time.time()
-                        mic_q.put((timestamp, data.astype(np.float32)))
+                    enabled = recording_enabled and mic_capture_enabled
+                if enabled:
+                    mic_q.put((time.time(), data.astype(np.float32)))
     except Exception as e:
         print(f"[MIC] Error: {e}", flush=True)
-        import traceback
-        traceback.print_exc()
 
 
 # =========================
@@ -811,29 +809,101 @@ HTML_TEMPLATE = """
     }
     
     .timeline-item {
+      border-left: 2px solid var(--border);
+      margin-left: 1.5rem;
+      padding-left: 1.5rem;
+      padding-bottom: 1rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .timeline-item:hover {
+      border-left-color: var(--accent);
+    }
+    
+    .timeline-item:last-child {
+      border-left-color: transparent;
+      padding-bottom: 0;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -7px;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      background: var(--bg-primary);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+    
+    .timeline-item:hover::before {
+      background: var(--accent);
+    }
+    
+    .timeline-item.expanded::before {
+      background: var(--accent);
+    }
+    
+    .timeline-header {
       display: flex;
-      gap: 1rem;
-      padding: 0.5rem 0;
+      align-items: center;
+      gap: 0.75rem;
     }
     
     .timeline-time {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
-      min-width: 50px;
-    }
-    
-    .timeline-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      margin-top: 0.35rem;
+      background: var(--bg-secondary);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
     }
     
     .timeline-title {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .timeline-badge {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      background: var(--bg-tertiary);
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      margin-left: auto;
+    }
+    
+    .timeline-summary {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      font-size: 0.8rem;
       color: var(--text-secondary);
+      line-height: 1.6;
+      background: var(--bg-tertiary);
+      border-radius: 6px;
+      margin-top: 0;
+    }
+    
+    .timeline-item.expanded .timeline-summary {
+      max-height: 500px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    
+    .timeline-expand-icon {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+    
+    .timeline-item.expanded .timeline-expand-icon {
+      transform: rotate(90deg);
     }
     
     /* Buttons */
@@ -1160,16 +1230,20 @@ HTML_TEMPLATE = """
     // Timeline
     async function fetchTimeline() {
       try {
-        const res = await fetch('/api/report');
+        const res = await fetch('/api/timeline');
         const data = await res.json();
         
         const timelineEl = document.getElementById('timelineView');
-        if (data.topic_timeline && data.topic_timeline.length > 0) {
-          timelineEl.innerHTML = data.topic_timeline.map(t => `
-            <div class="timeline-item">
-              <span class="timeline-time">${t.time}</span>
-              <span class="timeline-dot"></span>
-              <span class="timeline-title">${escapeHtml(t.title)}</span>
+        if (data.topics && data.topics.length > 0) {
+          timelineEl.innerHTML = data.topics.map((t, idx) => `
+            <div class="timeline-item" onclick="toggleTimelineItem(this)" data-idx="${idx}">
+              <div class="timeline-header">
+                <span class="timeline-time">${t.time}</span>
+                <span class="timeline-title">${escapeHtml(t.title)}</span>
+                ${t.chunk_count > 1 ? `<span class="timeline-badge">${t.chunk_count} parts</span>` : ''}
+                <span class="timeline-expand-icon">▶</span>
+              </div>
+              <div class="timeline-summary">${escapeHtml(t.summary)}</div>
             </div>
           `).join('');
         } else {
@@ -1178,6 +1252,10 @@ HTML_TEMPLATE = """
       } catch (e) {
         console.error('Failed to fetch timeline:', e);
       }
+    }
+    
+    function toggleTimelineItem(el) {
+      el.classList.toggle('expanded');
     }
     
     // Report
@@ -1419,6 +1497,53 @@ def get_insights():
     return jsonify(data)
 
 
+@app.route("/api/timeline")
+def get_timeline():
+    """Get grouped topic timeline - combines consecutive same-topic chunks."""
+    data = _read_memory_log()
+    chunks = sorted(data["chunks"], key=lambda x: x["ts"])
+    
+    # Group consecutive chunks with same title
+    grouped = []
+    for chunk in chunks:
+        title = chunk.get("title", "").strip()
+        summary = chunk.get("summary", "").strip()
+        ts = chunk.get("ts", 0)
+        
+        # Skip pending or empty
+        if not title or title == "(pending)" or title.lower() == "no speech":
+            continue
+        if not summary or summary.lower() == "no speech":
+            continue
+            
+        # Check if same topic as previous
+        if grouped and grouped[-1]["title"] == title:
+            # Append to existing topic
+            grouped[-1]["summaries"].append(summary)
+            grouped[-1]["end_ts"] = ts
+        else:
+            # New topic
+            grouped.append({
+                "title": title,
+                "start_ts": ts,
+                "end_ts": ts,
+                "summaries": [summary]
+            })
+    
+    # Format for frontend
+    timeline = []
+    for g in grouped:
+        combined_summary = " ".join(g["summaries"])
+        timeline.append({
+            "time": time.strftime("%H:%M", time.localtime(g["start_ts"])),
+            "title": g["title"],
+            "summary": combined_summary,
+            "chunk_count": len(g["summaries"])
+        })
+    
+    return jsonify({"topics": timeline})
+
+
 @app.route("/api/report")
 def generate_report():
     """Generate a conversation report based on all available data."""
@@ -1428,6 +1553,24 @@ def generate_report():
     with text_lock:
         transcript = system_text + "\n" + mic_text
     
+    # Group topics for timeline
+    chunks = sorted(data["chunks"], key=lambda x: x["ts"])
+    grouped = []
+    for chunk in chunks:
+        title = chunk.get("title", "").strip()
+        if not title or title == "(pending)":
+            continue
+        if grouped and grouped[-1]["title"] == title:
+            grouped[-1]["summaries"].append(chunk.get("summary", ""))
+            grouped[-1]["end_ts"] = chunk["ts"]
+        else:
+            grouped.append({
+                "title": title,
+                "start_ts": chunk["ts"],
+                "end_ts": chunk["ts"],
+                "summaries": [chunk.get("summary", "")]
+            })
+    
     # Build report
     report = {
         "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -1435,10 +1578,14 @@ def generate_report():
         "total_interjections": len(data["interjections"]),
         "key_patterns": data["ltm"],
         "topic_timeline": [
-            {"time": time.strftime("%H:%M", time.localtime(c["ts"])), "title": c["title"]}
-            for c in sorted(data["chunks"], key=lambda x: x["ts"])
+            {
+                "time": time.strftime("%H:%M", time.localtime(g["start_ts"])),
+                "title": g["title"],
+                "summary": " ".join(g["summaries"])
+            }
+            for g in grouped
         ],
-        "summaries": [c["summary"] for c in sorted(data["chunks"], key=lambda x: x["ts"])],
+        "summaries": [" ".join(g["summaries"]) for g in grouped],
         "transcript_preview": transcript[:2000] if transcript else "No transcript available",
     }
     return jsonify(report)
