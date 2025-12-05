@@ -700,3 +700,257 @@
   "title": "Drama Class as Fear Conqueror"
 }
 
+{
+  "type": "interjection",
+  "ts": 1764898869.565593,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No information provided",
+      "Unable to analyze dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No information provided\", \"Unable to analyze dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898898.110738,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "underlying need for excitement was expressed",
+      "discussion about career pressures"
+    ],
+    "candidateMessage": "It sounds like there's a strong desire for excitement and a fear of conformity during career discussions.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"fear of conformity\",\n    \"unspokenNeedCandidate\": \"need for excitement\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying need for excitement was expressed\", \"discussion about career pressures\"],\n    \"candidateMessage\": \"It sounds like there's a strong desire for excitement and a fear of conformity during career discussions.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "fear of conformity",
+      "unspokenNeedCandidate": "need for excitement"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898901.2675788,
+  "summary": "Mr. Ellis and Claire discuss their work experiences, particularly recalling funny and memorable moments. Claire is remembered for demanding chocolate and getting slightly angry, a trait she insists she never shows towards Mr. Ellis. They also mention having a mutual love for sweet things, which affects their focus later in the day. Their conversation hints at a light-hearted dynamic, with no serious conflicts between them.",
+  "title": "Chocolate Demands in Workplace Interactions"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898931.619374,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Unable to analyze"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Unable to analyze\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898959.994837,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.8,
+    "reasons": [
+      "Conversation is light-hearted",
+      "No escalation or significant tension"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"fear of embarrassment\",\n    \"unspokenNeedCandidate\": \"need for humor and understanding\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 0,\n    \"reasons\": [\"Conversation is light-hearted\", \"No escalation or significant tension\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "fear of embarrassment",
+      "unspokenNeedCandidate": "need for humor and understanding"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898963.8334248,
+  "summary": "The transcript describes a chaotic filming moment on the first day of shooting a scene where someone fell over their heels while turning on lights, which led to laughter and multiple retakes. It also mentions tension among people before this incident and includes a conversation about holiday gifts like chocolate. Towards the end, there’s a mention of characters using posh British accents, but it's unclear if any accents were demonstrated. Discussions were interspersed with some lighthearted moments.",
+  "title": "Chocolate Demands in Workplace Interactions"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898993.825238,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue provided",
+      "No context to analyze"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue provided\", \"No context to analyze\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899055.441622,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data available",
+      "Cannot analyze or advise without dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data available\", \"Cannot analyze or advise without dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899118.639031,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No input data",
+      "Unable to analyze without dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No input data\", \"Unable to analyze without dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899180.537102,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue available",
+      "Insufficient information to analyze"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue available\", \"Insufficient information to analyze\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+

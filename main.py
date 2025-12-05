@@ -158,7 +158,7 @@ def get_system_loopback_mic():
         print(f"Loopback not available: {e}")
     
     print("No system audio capture device found. Check BlackHole setup.")
-        return None
+    return None
 
 
 def get_mic():
@@ -202,10 +202,10 @@ def system_audio_loop():
         dev = get_system_loopback_mic()
         if dev is None:
             print("Skipping system audio (no device).", flush=True)
-        return
+            return
         print(f"[SYSTEM] Ready: {dev.name}", flush=True)
         with dev.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=REC_BLOCKSIZE_SYSTEM) as rec:
-        while True:
+            while True:
                 data = rec.record(numframes=REC_BLOCKSIZE_SYSTEM)
                 with state_lock:
                     enabled = recording_enabled and system_capture_enabled
@@ -218,13 +218,13 @@ def system_audio_loop():
 def mic_audio_loop():
     """Capture mic audio from the chosen mic."""
     try:
-    mic = get_mic()
+        mic = get_mic()
         if mic is None:
             print("[MIC] Skipping mic capture (no microphone found).", flush=True)
             return
         print(f"[MIC] Ready: {mic.name}", flush=True)
         with mic.recorder(samplerate=SAMPLE_RATE, channels=1, blocksize=REC_BLOCKSIZE_MIC) as rec:
-        while True:
+            while True:
                 data = rec.record(numframes=REC_BLOCKSIZE_MIC)
                 with state_lock:
                     enabled = recording_enabled and mic_capture_enabled
@@ -1292,7 +1292,7 @@ HTML_TEMPLATE = """
         const interjectEl = document.getElementById('interjectionsList');
         if (data.interjections && data.interjections.length > 0) {
           interjectEl.innerHTML = data.interjections.map(i => 
-            `<div class="interject-item"><div class="interject-header"><span class="interject-type">${escapeHtml(i.type.replace(/_/g, ' '))}</span><span class="interject-conf">${(i.confidence * 100).toFixed(0)}% confidence</span></div><div class="interject-msg">"${escapeHtml(i.message)}"</div></div>`
+            `<div class="interject-item"><div class="interject-type">${escapeHtml(i.type.replace(/_/g, ' '))}</div><div class="interject-msg">"${escapeHtml(i.message)}"</div></div>`
           ).join('');
         }
         
@@ -1432,7 +1432,7 @@ HTML_TEMPLATE = """
     }
     
     // Toast notifications
-    function showToast(type, message, confidence) {
+    function showToast(type, message) {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = 'toast';
@@ -1442,7 +1442,6 @@ HTML_TEMPLATE = """
           <button class="toast-close" onclick="dismissToast(this.parentElement.parentElement)">&times;</button>
         </div>
         <div class="toast-message">"${escapeHtml(message)}"</div>
-        <div class="toast-conf">${(confidence * 100).toFixed(0)}% confidence</div>
       `;
       container.appendChild(toast);
       
@@ -1468,7 +1467,7 @@ HTML_TEMPLATE = """
           // Show new interjections as toasts
           for (const i of data.interjections) {
             if (i.ts > lastInterjectionTs && !i.skipped) {
-              showToast(i.type, i.message, i.confidence);
+              showToast(i.type, i.message);
               lastInterjectionTs = i.ts;
             }
           }
