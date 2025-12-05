@@ -240,3 +240,463 @@
   "title": "Urgent Task Amidst Conflict"
 }
 
+{
+  "type": "interjection",
+  "ts": 1764898437.359472,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data available for analysis",
+      "No indication of current issues"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data available for analysis\", \"No indication of current issues\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898459.240016,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue or summaries provided",
+      "No context to analyze"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue or summaries provided\", \"No context to analyze\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898498.9844532,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Unable to analyze or interject"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Unable to analyze or interject\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898517.039479,
+  "summary": "The speaker tells someone they don't need to be present.",
+  "title": "Not Needing Someone's Presence"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898521.238747,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "reflect_deeper_emotion",
+    "confidence": 0.7,
+    "reasons": [
+      "underlying feeling of unimportance",
+      "need for appreciation present"
+    ],
+    "candidateMessage": "It sounds like there's a feeling of unimportance when someone says 'You don't need to be here.'",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 1,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": true,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unimportant\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.7,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying feeling of unimportance\", \"need for appreciation present\"],\n    \"candidateMessage\": \"It sounds like there's a feeling of unimportance when someone says 'You don't need to be here.'\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 1,
+      "blameLevel": 1,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": true,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unimportant",
+      "unspokenNeedCandidate": "need for appreciation"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898560.983725,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Unable to analyze"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Unable to analyze\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898581.0408561,
+  "summary": "The transcript discusses the excitement of engaging with an audience, particularly in reference to Harrison Ford, labeled as the \"biggest box office star in the world.\" The conversations touch on the significance of Ford's roles, especially in \"Star Wars,\" comparing its cultural impact to a religion. There is also a mention of nostalgia and a reluctance to repeat past successes. The transcript highlights the historic release of \"Star Wars\" on May 25th, 1977, noting how the film has been viewed by thousands at the North Park Cinema 2.",
+  "title": "'Harrison Ford's Star Power'"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898583.125043,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.8,
+    "reasons": [
+      "No escalation or blame detected",
+      "No misunderstandings likely"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unimportant\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No escalation or blame detected\", \"No misunderstandings likely\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unimportant",
+      "unspokenNeedCandidate": "need for appreciation"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898622.848716,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Unable to analyze the dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Unable to analyze the dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898645.895494,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "reflect_deeper_emotion",
+    "confidence": 0.7,
+    "reasons": [
+      "underlying feeling of unimportance detected",
+      "repeated reference to significance of roles and connections"
+    ],
+    "candidateMessage": "When discussing roles and connection with the audience, is there a feeling of unimportance if a role doesn't feel significant?",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unimportant\",\n    \"unspokenNeedCandidate\": \"need for significance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.7,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying feeling of unimportance detected\", \"repeated reference to significance of roles and connections\"],\n    \"candidateMessage\": \"When discussing roles and connection with the audience, is there a feeling of unimportance if a role doesn't feel significant?\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unimportant",
+      "unspokenNeedCandidate": "need for significance"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898646.987782,
+  "summary": "The transcript discusses the immense success of the movie Star Wars, noting that within nine days it became the highest-grossing film in Dallas history. It mentions Harrison Ford's role as Han Solo, describing him as a cynical space pirate with a heart of gold who captains the Millennium Falcon. The narrative hints at how the success of Star Wars may be impacting Ford's personal life and career. Despite the character's mercenary nature, there's a question about his capacity for caring about others.",
+  "title": "'Harrison Ford's Star Power'"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898684.232773,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Cannot analyze without dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Cannot analyze without dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898708.628587,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.7,
+    "reasons": [
+      "underlying feeling identified",
+      "conversation about acceptance"
+    ],
+    "candidateMessage": "It's interesting how the feeling of being an outsider reflects a deeper need for acceptance.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling of being an outsider\",\n    \"unspokenNeedCandidate\": \"need for acceptance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.7,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying feeling identified\", \"conversation about acceptance\"],\n    \"candidateMessage\": \"It's interesting how the feeling of being an outsider reflects a deeper need for acceptance.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling of being an outsider",
+      "unspokenNeedCandidate": "need for acceptance"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898710.386493,
+  "summary": "The speaker reflects on their Midwestern upbringing, describing aspects of their personality like reticence and a work ethic morality, shaped by experiences such as being an outsider at a new school at age 12. They recall being bullied, regularly thrown down a slope into brambles, and their response was to pick themselves up and climb back each time. They mention studying philosophy and English in college, indicating an interest in deep thinking and literature.",
+  "title": "Midwest Roots and School Bullying"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898746.0207691,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue or summaries provided",
+      "Insufficient information to analyze or interject"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue or summaries provided\", \"Insufficient information to analyze or interject\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898772.144585,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "reflect_deeper_emotion",
+    "confidence": 0.8,
+    "reasons": [
+      "underlying feeling of being an outsider",
+      "need for acceptance present"
+    ],
+    "candidateMessage": "It seems there's a feeling of being an outsider from your past experiences; maybe there's a need for acceptance now.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling like an outsider\",\n    \"unspokenNeedCandidate\": \"need for acceptance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying feeling of being an outsider\", \"need for acceptance present\"],\n    \"candidateMessage\": \"It seems there's a feeling of being an outsider from your past experiences; maybe there's a need for acceptance now.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling like an outsider",
+      "unspokenNeedCandidate": "need for acceptance"
+    },
+    "interventionValue": 2
+  }
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898774.474543,
+  "summary": "The speaker's grade point average had declined significantly, pushing them to enroll in a drama class due to a lack of other options. Initially, they were terrified of acting and speaking in front of people, but they continued to pursue it to overcome their fear. As their fear subsided, they became more engaged in acting, which helped them find a sense of belonging they hadn't experienced before. Their father's office job did not appeal to them, and they observed their friends leaving school as graduates, prompting personal reflection on their future path.",
+  "title": "Drama Class as Fear Conqueror"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898807.960989,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided.",
+      "Unable to analyze without content."
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided.\", \"Unable to analyze without content.\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764898834.747256,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "reflect_deeper_emotion",
+    "confidence": 0.8,
+    "reasons": [
+      "underlying feelings of being an outsider",
+      "need for belonging identified"
+    ],
+    "candidateMessage": "In reflecting on your past, there seems to be a strong feeling of being an outsider and a need for belonging you may both relate to.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling of being an outsider\",\n    \"unspokenNeedCandidate\": \"need for belonging\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying feelings of being an outsider\", \"need for belonging identified\"],\n    \"candidateMessage\": \"In reflecting on your past, there seems to be a strong feeling of being an outsider and a need for belonging you may both relate to.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling of being an outsider",
+      "unspokenNeedCandidate": "need for belonging"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "chunk",
+  "ts": 1764898837.4648829,
+  "summary": "The speaker describes a desire to avoid a traditional career path that leads to retirement, golf, and death. They wanted excitement and a challenge instead of a typical job. They talk about an early acting experience involving a role as a bell and interacting with Robert Ellis and Mr. Charles in various hotel rooms.",
+  "title": "Drama Class as Fear Conqueror"
+}
+

@@ -158,7 +158,7 @@ def get_system_loopback_mic():
         print(f"Loopback not available: {e}")
     
     print("No system audio capture device found. Check BlackHole setup.")
-    return None
+        return None
 
 
 def get_mic():
@@ -202,10 +202,10 @@ def system_audio_loop():
         dev = get_system_loopback_mic()
         if dev is None:
             print("Skipping system audio (no device).", flush=True)
-            return
+        return
         print(f"[SYSTEM] Ready: {dev.name}", flush=True)
         with dev.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=REC_BLOCKSIZE_SYSTEM) as rec:
-            while True:
+        while True:
                 data = rec.record(numframes=REC_BLOCKSIZE_SYSTEM)
                 with state_lock:
                     enabled = recording_enabled and system_capture_enabled
@@ -218,13 +218,13 @@ def system_audio_loop():
 def mic_audio_loop():
     """Capture mic audio from the chosen mic."""
     try:
-        mic = get_mic()
+    mic = get_mic()
         if mic is None:
             print("[MIC] Skipping mic capture (no microphone found).", flush=True)
             return
         print(f"[MIC] Ready: {mic.name}", flush=True)
         with mic.recorder(samplerate=SAMPLE_RATE, channels=1, blocksize=REC_BLOCKSIZE_MIC) as rec:
-            while True:
+        while True:
                 data = rec.record(numframes=REC_BLOCKSIZE_MIC)
                 with state_lock:
                     enabled = recording_enabled and mic_capture_enabled
@@ -521,8 +521,9 @@ HTML_TEMPLATE = """
       color: var(--text-secondary);
       max-height: 400px;
       overflow-y: auto;
-      white-space: pre-wrap;
     }
+    
+    .card-body.transcript { white-space: pre-wrap; }
     
     .card-body::-webkit-scrollbar { width: 6px; }
     .card-body::-webkit-scrollbar-track { background: transparent; }
@@ -1105,14 +1106,14 @@ HTML_TEMPLATE = """
             <span class="card-title">System Audio</span>
             <span class="badge badge-live">Live</span>
       </div>
-          <div id="systemText" class="card-body">Waiting for audio...</div>
+          <div id="systemText" class="card-body transcript">Waiting for audio...</div>
     </div>
         <div class="card">
           <div class="card-header">
             <span class="card-title">Microphone</span>
             <span class="badge badge-mic">Mic</span>
       </div>
-          <div id="micText" class="card-body">Waiting for audio...</div>
+          <div id="micText" class="card-body transcript">Waiting for audio...</div>
         </div>
     </div>
   </div>
@@ -1282,38 +1283,25 @@ HTML_TEMPLATE = """
         // Render summaries
         const summariesEl = document.getElementById('summariesList');
         if (data.chunks && data.chunks.length > 0) {
-          summariesEl.innerHTML = data.chunks.map(c => `
-            <div class="summary-item">
-              <div class="summary-time">${new Date(c.ts * 1000).toLocaleTimeString()}</div>
-              <div class="summary-title">${escapeHtml(c.title)}</div>
-              <div class="summary-text">${escapeHtml(c.summary)}</div>
-            </div>
-          `).join('');
+          summariesEl.innerHTML = data.chunks.map(c => 
+            `<div class="summary-item"><div class="summary-time">${new Date(c.ts * 1000).toLocaleTimeString()}</div><div class="summary-title">${escapeHtml(c.title)}</div><div class="summary-text">${escapeHtml(c.summary)}</div></div>`
+          ).join('');
         }
         
         // Render interjections
         const interjectEl = document.getElementById('interjectionsList');
         if (data.interjections && data.interjections.length > 0) {
-          interjectEl.innerHTML = data.interjections.map(i => `
-            <div class="interject-item">
-              <div class="interject-header">
-                <span class="interject-type">${escapeHtml(i.type.replace(/_/g, ' '))}</span>
-                <span class="interject-conf">${(i.confidence * 100).toFixed(0)}% confidence</span>
-              </div>
-              <div class="interject-msg">"${escapeHtml(i.message)}"</div>
-            </div>
-          `).join('');
+          interjectEl.innerHTML = data.interjections.map(i => 
+            `<div class="interject-item"><div class="interject-header"><span class="interject-type">${escapeHtml(i.type.replace(/_/g, ' '))}</span><span class="interject-conf">${(i.confidence * 100).toFixed(0)}% confidence</span></div><div class="interject-msg">"${escapeHtml(i.message)}"</div></div>`
+          ).join('');
         }
         
         // Render LTM
         const ltmEl = document.getElementById('ltmList');
         if (data.ltm && data.ltm.length > 0) {
-          ltmEl.innerHTML = data.ltm.map(b => `
-            <li class="ltm-item">
-              <span class="ltm-bullet"></span>
-              <span>${escapeHtml(b)}</span>
-            </li>
-          `).join('');
+          ltmEl.innerHTML = data.ltm.map(b => 
+            `<li class="ltm-item"><span class="ltm-bullet"></span><span>${escapeHtml(b)}</span></li>`
+          ).join('');
         }
       } catch (e) {
         console.error('Failed to fetch insights:', e);
@@ -1701,9 +1689,9 @@ def get_timeline():
                 "summaries": [summary]
             })
     
-    # Format for frontend
+    # Format for frontend (reversed - latest first)
     timeline = []
-    for g in grouped:
+    for g in reversed(grouped):
         combined_summary = " ".join(g["summaries"])
         timeline.append({
             "time": time.strftime("%H:%M", time.localtime(g["start_ts"])),
