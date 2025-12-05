@@ -157,7 +157,7 @@ def get_system_loopback_mic():
         print(f"Loopback not available: {e}")
     
     print("No system audio capture device found. Check BlackHole setup.")
-        return None
+    return None
 
 
 def get_mic():
@@ -201,10 +201,10 @@ def system_audio_loop():
         dev = get_system_loopback_mic()
         if dev is None:
             print("Skipping system audio (no device).", flush=True)
-        return
+            return
         print(f"[SYSTEM] Ready: {dev.name}", flush=True)
         with dev.recorder(samplerate=SAMPLE_RATE, channels=2, blocksize=REC_BLOCKSIZE_SYSTEM) as rec:
-        while True:
+            while True:
                 data = rec.record(numframes=REC_BLOCKSIZE_SYSTEM)
                 with state_lock:
                     enabled = recording_enabled and system_capture_enabled
@@ -217,13 +217,13 @@ def system_audio_loop():
 def mic_audio_loop():
     """Capture mic audio from the chosen mic."""
     try:
-    mic = get_mic()
+        mic = get_mic()
         if mic is None:
             print("[MIC] Skipping mic capture (no microphone found).", flush=True)
             return
         print(f"[MIC] Ready: {mic.name}", flush=True)
         with mic.recorder(samplerate=SAMPLE_RATE, channels=1, blocksize=REC_BLOCKSIZE_MIC) as rec:
-        while True:
+            while True:
                 data = rec.record(numframes=REC_BLOCKSIZE_MIC)
                 with state_lock:
                     enabled = recording_enabled and mic_capture_enabled
