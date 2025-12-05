@@ -6,6 +6,17 @@ import threading
 import datetime
 
 import numpy as np
+try:
+    import noisereduce as nr
+except ImportError:
+    nr = None
+    print("Warning: noisereduce not installed; audio denoising disabled.")
+
+try:
+    import webrtcvad
+except ImportError:
+    webrtcvad = None
+    print("Warning: webrtcvad not installed; VAD filtering disabled.")
 
 # =========================
 # NUMPY / SOUNDCard PATCH
@@ -42,7 +53,7 @@ from flask import Flask, jsonify, render_template_string
 SAMPLE_RATE = 16000          # target sample rate for STT
 
 # recorder buffer sizes (larger = fewer underruns). macOS CoreAudio limits blocksize <= 512.
-REC_BLOCKSIZE = 512          # frames per read for both system and mic
+REC_BLOCKSIZE = 480          # frames per read for both system and mic
 
 # separate chunk sizes
 SYSTEM_CHUNK_SECONDS = 3.0   # system audio chunks
@@ -53,10 +64,33 @@ LANGUAGE = "en"              # or None for auto
 
 # Preferred device for Whisper: "cuda" (GPU) or "cpu"
 WHISPER_DEVICE_PREFERENCE = "cpu"
+# Guiding prompt to reduce hallucinations during silence
+GUIDING_PROMPT = (
+    "The audio may have silence or background noise. "
+    "If no one is speaking, return nothing. Do not make up words or add conversational fillers."
+)
+# Phrases to detect if Whisper echoes the prompt; any match will be canonicalized
+GUIDING_PROMPT_SNIPPETS = [
+    "the audio may have silence or background noise",
+    "if no one is speaking, return nothing",
+]
+# Canonical marker to make silence-echo insertions easy to strip in post
+SILENCE_ECHO_MARKER = "[[SILENCE]]"
+# Toggle false-positive phrase filtering (set to False to disable)
+ENABLE_FALSE_POSITIVE_FILTER = False
 
 # Toggle sources
 ENABLE_SYSTEM_CAPTURE = True
-ENABLE_MIC_CAPTURE = False
+ENABLE_MIC_CAPTURE = True
+
+# Minimum volume (dBFS) required for a chunk to be considered speech.
+# Set closer to 0 for more sensitivity; more negative for stricter filtering.
+MIN_VOLUME_DB = -50.0  # Lowered to capture quieter speech
+
+# Voice activity detection configuration
+ENABLE_VAD = True
+VAD_AGGRESSIVENESS = 2  # 0-3; 2 = medium strictness (was 3, too strict)
+VAD_MIN_SPEECH_RATIO = 0.15  # Minimum fraction of frames that must contain speech (lowered from 0.3)
 
 # Optional filters to force a specific device by name substring
 # e.g. "Focusrite USB Audio" or "DELL S2721Q"
@@ -80,6 +114,8 @@ system_text = ""
 mic_text = ""
 text_lock = threading.Lock()
 log_lock = threading.Lock()
+noise_lock = threading.Lock()
+noise_profiles = {"system": None, "mic": None}
 
 
 def _log_entry(source: str, text: str):
@@ -233,6 +269,162 @@ def chunker_worker(name, in_q, out_q, sample_rate, chunk_seconds):
 # =========================
 # TRANSCRIBER WORKER
 # =========================
+def denoise_audio(source: str, audio: np.ndarray) -> np.ndarray:
+    """
+    Apply lightweight noise reduction using a running noise profile per source.
+    Falls back to raw audio if noisereduce is unavailable.
+    """
+    if nr is None or audio.size == 0:
+        return audio
+
+    with noise_lock:
+        noise_profile = noise_profiles.get(source)
+        if noise_profile is None:
+            noise_profiles[source] = audio.copy()
+            return audio
+        noise_snapshot = noise_profile.copy()
+
+    try:
+        cleaned = nr.reduce_noise(
+            y=audio,
+            y_noise=noise_snapshot,
+            sr=SAMPLE_RATE,
+            stationary=False,
+            prop_decrease=0.85,
+        ).astype(np.float32)
+
+        # Update noise profile using exponential moving average
+        with noise_lock:
+            current = noise_profiles[source]
+            trim = min(len(current), len(audio))
+            current[:trim] = 0.9 * current[:trim] + 0.1 * audio[:trim]
+        return cleaned
+    except Exception as exc:
+        print(f"Noise reduction failed for {source}: {exc}")
+        return audio
+
+
+def is_chunk_loud(audio: np.ndarray, threshold_db: float = MIN_VOLUME_DB) -> bool:
+    """
+    Determine whether the audio chunk has sufficient volume to be sent to STT.
+    """
+    if audio.size == 0:
+        return False
+
+    rms = np.sqrt(np.mean(np.square(audio)))
+    rms = max(rms, 1e-8)  # avoid log(0)
+    db = 20 * np.log10(rms)
+    return db >= threshold_db
+
+
+# Common false positive phrases that Whisper often generates from silence/noise
+FALSE_POSITIVE_PHRASES = {
+    # Keep only single-word fillers to avoid blocking legit phrases like "thank you"
+    "okay", "ok",
+    "yeah", "yes", "yep", "yup",
+    "uh", "um",
+    "mm", "hmm",
+    "hello", "hi", "hey",
+    "goodbye", "bye",
+    "sorry",
+    "please",
+    "alright",
+    "sure",
+    "right",
+    "well",
+}
+
+
+def is_likely_false_positive(text: str) -> bool:
+    """
+    Check if transcribed text is likely a false positive from silence/noise.
+    Filters out common short phrases that Whisper often hallucinates.
+    Made less aggressive to avoid filtering legitimate speech.
+    """
+    if not text:
+        return True
+    if text == SILENCE_ECHO_MARKER:
+        return False
+    if not ENABLE_FALSE_POSITIVE_FILTER:
+        return False
+    
+    text_lower = text.lower().strip()
+
+    # Drop anything that echoes the guiding prompt (or snippets of it)
+    if any(snippet in text_lower for snippet in GUIDING_PROMPT_SNIPPETS):
+        return True
+    
+    # Filter out very short texts (likely noise) - but be more lenient
+    if len(text_lower) < 2:
+        return True
+    
+    # Only filter exact matches of known false positive phrases
+    # This is more conservative - won't filter partial matches
+    if text_lower in FALSE_POSITIVE_PHRASES:
+        return True
+    
+    # Only filter if text is just repeated single words (e.g., "okay okay okay")
+    # and it's a known false positive
+    words = text_lower.split()
+    if len(words) >= 3 and len(set(words)) == 1:
+        # Check if the repeated word is a known false positive
+        if words[0] in FALSE_POSITIVE_PHRASES:
+            return True
+    
+    # Don't filter 2-word phrases - they might be legitimate speech
+    # Only filter single-word exact matches
+    if len(words) == 1 and text_lower in FALSE_POSITIVE_PHRASES:
+        return True
+    
+    return False
+
+
+def has_voice_activity(audio: np.ndarray) -> bool:
+    """
+    Use WebRTC VAD to determine if the chunk contains speech.
+    Requires a minimum percentage of frames to contain speech to reduce false positives.
+    Returns True when VAD is disabled or unavailable.
+    """
+    if not ENABLE_VAD or webrtcvad is None:
+        return True
+    if audio.size == 0:
+        return False
+
+    try:
+        vad = webrtcvad.Vad(int(np.clip(VAD_AGGRESSIVENESS, 0, 3)))
+        frame_duration_ms = 30  # 10/20/30ms supported
+        frame_length = int(SAMPLE_RATE * frame_duration_ms / 1000)
+        if frame_length == 0:
+            return False
+
+        pcm = np.clip(audio, -1.0, 1.0)
+        pcm16 = (pcm * 32767).astype(np.int16)
+        bytes_per_frame = frame_length * 2  # int16 -> 2 bytes
+        total_bytes = len(pcm16) * 2
+        usable_bytes = total_bytes - (total_bytes % bytes_per_frame)
+        if usable_bytes <= 0:
+            return False
+
+        pcm_bytes = pcm16.tobytes()
+        speech_frames = 0
+        total_frames = 0
+        
+        for offset in range(0, usable_bytes, bytes_per_frame):
+            frame = pcm_bytes[offset:offset + bytes_per_frame]
+            total_frames += 1
+            if vad.is_speech(frame, SAMPLE_RATE):
+                speech_frames += 1
+        
+        if total_frames == 0:
+            return False
+        
+        # Require minimum percentage of frames to contain speech
+        speech_ratio = speech_frames / total_frames
+        return speech_ratio >= VAD_MIN_SPEECH_RATIO
+    except Exception as exc:
+        print(f"VAD processing failed, passing audio through: {exc}")
+        return True
+
 
 def transcriber_worker(model, in_q, language=None):
     """
@@ -241,32 +433,67 @@ def transcriber_worker(model, in_q, language=None):
     """
     global system_text, mic_text
 
+    prompt_kwargs = {"initial_prompt": GUIDING_PROMPT} if GUIDING_PROMPT else {}
+
     while True:
         source, chunk = in_q.get()
         if chunk is None:
             break
 
-        audio = chunk.astype(np.float32)
+        raw_audio = chunk.astype(np.float32)
 
+        # Hard energy gate before denoise
+        if not is_chunk_loud(raw_audio):
+            denoise_audio(source, raw_audio)  # keep profile up to date
+            continue
+
+        # Require VAD speech before transcribing
+        if not has_voice_activity(raw_audio):
+            denoise_audio(source, raw_audio)
+            continue
+
+        audio = denoise_audio(source, raw_audio)
+
+        # Post-denoise energy gate to avoid boosted noise passing through
+        if not is_chunk_loud(audio):
+            continue
+        
         if source == "mic":
             # Mic: prioritize quality/stability
+            # Disable Whisper's VAD since we're doing our own filtering
+            # This prevents double-filtering that might miss speech
             segments, info = model.transcribe(
                 audio,
                 language=language,
                 beam_size=5,      # more search → better accuracy
-                vad_filter=False  # avoid chopping speech on noisy mic
+                vad_filter=False,  # Disabled - we already filtered with our VAD
+                
+                **prompt_kwargs,
             )
         else:
-            # System: keep fast, it’s already good
+            # System: keep fast, it's already good
+            # System audio is usually cleaner, so keep VAD enabled
             segments, info = model.transcribe(
                 audio,
                 language=language,
                 beam_size=1,
-                vad_filter=True
+                vad_filter=True,
+                **prompt_kwargs,
             )
 
         text = "".join(seg.text for seg in segments).strip()
         if not text:
+            continue
+
+        # If Whisper echoes our guiding prompt, replace with a canonical marker
+        text_lower = text.lower()
+        if any(snippet in text_lower for snippet in GUIDING_PROMPT_SNIPPETS):
+            # skip adding it to transcripts; treat as silence
+            text = SILENCE_ECHO_MARKER
+            continue
+        
+        # Filter out likely false positives
+        if is_likely_false_positive(text):
             continue
 
         with text_lock:

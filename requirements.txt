@@ -6,3 +6,5 @@ pandas
 requests
 openai
 python-dotenv
+noisereduce
+webrtcvad
