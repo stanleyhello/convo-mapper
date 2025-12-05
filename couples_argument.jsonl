@@ -1,0 +1,330 @@
+{
+  "type": "interjection",
+  "ts": 1764833477.328749,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.8,
+    "reasons": [
+      "Dialogue is calm and reflective",
+      "Partners are aware of argument patterns"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"arguments tend to happen late at night when tired\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for connection\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 0,\n    \"reasons\": [\"Dialogue is calm and reflective\", \"Partners are aware of argument patterns\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "arguments tend to happen late at night when tired",
+      "underlyingFeelingCandidate": "feeling overwhelmed",
+      "unspokenNeedCandidate": "need for connection"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "chunk",
+  "ts": 1764833477.3296168,
+  "summary": "The speaker discusses arguments with a spouse, noting that disputes often arise late at night after the kids are asleep. These arguments typically occur because both partners are tired, hungry, and overwhelmed, making it difficult to address issues from the day or week. Despite efforts to prevent this pattern, late night remains the most common time for their disagreements.",
+  "title": "Late-Night Spousal Disputes"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764833539.954637,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "highlight_pattern",
+    "confidence": 0.9,
+    "reasons": [
+      "Recurrence of late-night arguments when tired",
+      "Pattern of needing love and respect"
+    ],
+    "candidateMessage": "It sounds like your arguments often happen when you're tired at night; this cycle might be affecting how connected you feel.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 1,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"Conflicts frequently occur late at night when tired and overwhelmed\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for connection\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"highlight_pattern\",\n    \"confidence\": 0.9,\n    \"interventionValue\": 2,\n    \"reasons\": [\"Recurrence of late-night arguments when tired\", \"Pattern of needing love and respect\"],\n    \"candidateMessage\": \"It sounds like your arguments often happen when you're tired at night; this cycle might be affecting how connected you feel.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 1,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "Conflicts frequently occur late at night when tired and overwhelmed",
+      "underlyingFeelingCandidate": "feeling overwhelmed",
+      "unspokenNeedCandidate": "need for connection"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "chunk",
+  "ts": 1764833540.1355,
+  "summary": "The speakers discuss how their arguments have changed since having kids, noting that their most significant disagreements have arisen post-children. They attribute this to being more tired and passionate as parents, making it harder to brush off conflicts easily, unlike before having kids. Despite this increase in disagreements, both seem to prefer avoiding conflict, although one acknowledges enjoying debates, which sometimes lead to conflict.",
+  "title": "Late-Night Spousal Disputes"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764833601.94611,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "unspoken need for rest identified",
+      "partners discussing difficulty finding time"
+    ],
+    "candidateMessage": "It seems like a recurring challenge is finding time for rest and communication after long days.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for rest and communication time\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"unspoken need for rest identified\", \"partners discussing difficulty finding time\"],\n    \"candidateMessage\": \"It seems like a recurring challenge is finding time for rest and communication after long days.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling overwhelmed",
+      "unspokenNeedCandidate": "need for rest and communication time"
+    },
+    "interventionValue": 2
+  }
+}
+
+{
+  "type": "chunk",
+  "ts": 1764833602.562169,
+  "summary": "The speakers discuss their preferences between agreeing to disagree and finding a compromise. One person argues that compromise is essential in situations like financial decisions as it maintains unity. They admit that both individuals struggle with finding a balance between agreeing and compromising, but ultimately, they lean more towards compromising to make collective decisions.",
+  "title": "Late-Night Spousal Disputes"
+}
+
+{
+  "type": "chunk",
+  "ts": 1764833664.513828,
+  "summary": "The speaker discusses the importance of compromise and growth in marriage, emphasizing that marriage is a tool for personal development, which includes experiencing growing pains. They highlight the responsibility of having self-awareness, discipline, and thoughtfulness to recognize areas needing improvement. The speaker also mentions their role as a supportive partner, focusing on being fair in criticism and encouraging their spouse when she is trying to make changes. They conclude by suggesting they would like to add further criteria to this discussion.",
+  "title": "Late-Night Spousal Disputes"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764833668.907357,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.9,
+    "reasons": [
+      "The dialogue is calm and reflective",
+      "Couple discussing growth and compromise openly"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling overwhelmed\",\n    \"unspokenNeedCandidate\": \"need for compromise\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.9,\n    \"interventionValue\": 0,\n    \"reasons\": [\"The dialogue is calm and reflective\", \"Couple discussing growth and compromise openly\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling overwhelmed",
+      "unspokenNeedCandidate": "need for compromise"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "chunk",
+  "ts": 1764833726.97546,
+  "summary": "The transcript discusses the inevitability of arguments and disagreements in relationships, highlighting that it's normal for people to say things they regret or don’t mean. It emphasizes that differences in opinion are natural and working through issues takes time. The speaker suggests viewing arguments as opportunities to address underlying issues instead of becoming discouraged. They mention the challenge of recognizing areas of personal immaturity, using \"calendars\" and \"schedules\" as examples.",
+  "title": "Late-Night Spousal Disputes"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764833731.176213,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.9,
+    "reasons": [
+      "Conversation is reflective and constructive",
+      "No immediate signs of escalation or conflict"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"mutual compromise and reflection on personal growth\",\n    \"underlyingFeelingCandidate\": \"desire for mutual growth\",\n    \"unspokenNeedCandidate\": \"need for understanding in moments of disagreement\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.9,\n    \"interventionValue\": 0,\n    \"reasons\": [\"Conversation is reflective and constructive\", \"No immediate signs of escalation or conflict\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "mutual compromise and reflection on personal growth",
+      "underlyingFeelingCandidate": "desire for mutual growth",
+      "unspokenNeedCandidate": "need for understanding in moments of disagreement"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "chunk",
+  "ts": 1764833789.692565,
+  "summary": "The speaker seeks advice on improving their relationship skills, motivated by respect for Sean Moore. They discuss the significance of marriage as a lifelong commitment and emphasize the importance of resolving arguments by humbling oneself and reaffirming love. The advice given includes correcting one's tone, making eye contact, expressing love genuinely, and clarifying that disagreements are about trivial matters, not the love between partners.",
+  "title": "Late-Night Spousal Disputes"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764833802.650919,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "The couple discusses the need to remind each other that arguments don't question their love.",
+      "The underlying need for reassurance is evident in their conclusion."
+    ],
+    "candidateMessage": "It seems important to remind each other that the love remains intact after arguments, highlighting a need for reassurance.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"Both acknowledge that arguments are normal and aim to remind each other of their love afterward.\",\n    \"underlyingFeelingCandidate\": \"fear of disconnection\",\n    \"unspokenNeedCandidate\": \"need for reassurance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"The couple discusses the need to remind each other that arguments don't question their love.\", \"The underlying need for reassurance is evident in their conclusion.\"],\n    \"candidateMessage\": \"It seems important to remind each other that the love remains intact after arguments, highlighting a need for reassurance.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "Both acknowledge that arguments are normal and aim to remind each other of their love afterward.",
+      "underlyingFeelingCandidate": "fear of disconnection",
+      "unspokenNeedCandidate": "need for reassurance"
+    },
+    "interventionValue": 2
+  }
+}
+
+{
+  "type": "chunk",
+  "ts": 1764833852.937001,
+  "summary": "Andrew and Sean, known as the East Fam, reflect on a recent argument, concluding it with a focus on maintaining their marriage. They acknowledge having issues to work on despite having been together for seven to ten years. They express gratitude for listeners' input on handling disagreements in relationships. The transcript ends with them introducing themselves and closing the discussion.",
+  "title": "Late-Night Spousal Disputes"
+}
+
+{
+  "type": "ltm",
+  "ts": 1764833852.937001,
+  "bullets": [
+    "Arguments often occur late at night after the kids are asleep due to tiredness and feeling overwhelmed.",
+    "Significant disagreements have increased since having children, largely because they are more tired and emotionally invested.",
+    "Sean seeks love and acceptance in the relationship, while their partner values respect.",
+    "The couple focuses on compromise to maintain unity, especially in decisions like finances.",
+    "Marriage is seen as a tool for personal development, with a focus on self-awareness and personal growth.",
+    "They recognize the importance of pausing during heated moments and revisiting issues later to manage emotions.",
+    "The speakers view disagreements and arguments as part of the natural progression of relationships and opportunities for growth.",
+    "Despite disagreements, the couple values the importance of resolving conflicts by reaffirming love and practicing humility."
+  ]
+}
+
+{
+  "type": "interjection",
+  "ts": 1764833865.84068,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "Exploring underlying need for respect and reassurance",
+      "Participants acknowledged needing to work on 'correcting tone'"
+    ],
+    "candidateMessage": "It sounds like there's a need for mutual respect and reassurance, as seen in focusing on correcting tone.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"fear of not being respected\",\n    \"unspokenNeedCandidate\": \"need for mutual respect and reassurance\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"Exploring underlying need for respect and reassurance\", \"Participants acknowledged needing to work on 'correcting tone'\"],\n    \"candidateMessage\": \"It sounds like there's a need for mutual respect and reassurance, as seen in focusing on correcting tone.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "fear of not being respected",
+      "unspokenNeedCandidate": "need for mutual respect and reassurance"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "interjection",
+  "ts": 1764833927.993314,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.9,
+    "reasons": [
+      "Discussion is calm and constructive",
+      "No significant immediate tension or conflict present"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"acknowledging immaturity and working together\",\n    \"underlyingFeelingCandidate\": \"desire for mutual respect and growth\",\n    \"unspokenNeedCandidate\": \"need for reassurance after conflicts\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.9,\n    \"interventionValue\": 0,\n    \"reasons\": [\"Discussion is calm and constructive\", \"No significant immediate tension or conflict present\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "acknowledging immaturity and working together",
+      "underlyingFeelingCandidate": "desire for mutual respect and growth",
+      "unspokenNeedCandidate": "need for reassurance after conflicts"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "interjection",
+  "ts": 1764834007.9676569,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.8,
+    "reasons": [
+      "Dialogue remains calm and reflective.",
+      "No immediate conflict requiring intervention."
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"need for reassurance\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 0,\n    \"reasons\": [\"Dialogue remains calm and reflective.\", \"No immediate conflict requiring intervention.\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "need for reassurance",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
