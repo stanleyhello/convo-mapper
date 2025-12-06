@@ -8,3 +8,6 @@ openai
 python-dotenv
 noisereduce
 webrtcvad
+mido
+python-rtmidi
+pyfluidsynth

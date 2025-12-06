@@ -69,6 +69,12 @@ GUIDING_PROMPT = (
     "The audio may have silence or background noise. "
     "If no one is speaking, return nothing. Do not make up words or add conversational fillers."
 )
+# Phrases to strip unconditionally from ASR output (prompt echoes)
+DROP_PHRASES = [
+    "do not make up words",
+    "conversational fillers",
+    "if no one is speaking",
+]
 # Phrases to detect if Whisper echoes the prompt; any match will be canonicalized
 GUIDING_PROMPT_SNIPPETS = [
     "the audio may have silence or background noise",
@@ -487,6 +493,10 @@ def transcriber_worker(model, in_q, language=None):
 
         # If Whisper echoes our guiding prompt, replace with a canonical marker
         text_lower = text.lower()
+        # Strip known prompt-echo phrases at the ASR layer
+        if any(phrase in text_lower for phrase in DROP_PHRASES):
+            continue
+
         if any(snippet in text_lower for snippet in GUIDING_PROMPT_SNIPPETS):
             # skip adding it to transcripts; treat as silence
             text = SILENCE_ECHO_MARKER
