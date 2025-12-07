@@ -503,12 +503,13 @@ def memory_worker():
             print(
                 f"\n[{timestamp}] TITLE: {title}\n"
                 f"           SUMMARY: {summary}\n"
-                f"           MTM size: {len(mtm)} | LTM bullets: {len(ltm)}"
+                f"           MTM size: {len(mtm)} | LTM bullets: {len(ltm)}",
+                flush=True
             )
             if chunk_count % LTM_REFRESH_CHUNKS == 0 and ltm:
-                print("           LTM update:")
+                print("           LTM update:", flush=True)
                 for i, b in enumerate(ltm, 1):
-                    print(f"             {i}. {b}")
+                    print(f"             {i}. {b}", flush=True)
         except Exception as e:
             print(f"[memory] error: {e}")
 
@@ -537,6 +538,23 @@ def interject_worker():
             conf = decision["confidence"]
             now = time.time()
             cooldown_ok = (now - last_interject_ts) >= INTERJECT_COOLDOWN_SECONDS
+            timestamp = time.strftime("%H:%M:%S")
+
+            # Always print analysis results
+            analysis = decision.get("analysis", {})
+            print(
+                f"\n[{timestamp}] ANALYSIS:\n"
+                f"           Escalation: {analysis.get('escalationLevel', '?')}/3 | "
+                f"Blame: {analysis.get('blameLevel', '?')}/3 | "
+                f"Name-calling: {analysis.get('nameCallingPresent', '?')} | "
+                f"Global criticism: {analysis.get('globalCriticismPresent', '?')}\n"
+                f"           You-statements heavy: {analysis.get('youStatementsHeavy', '?')} | "
+                f"Misunderstanding likely: {analysis.get('misunderstandingLikely', '?')}\n"
+                f"           Cycle: {analysis.get('cycleDescription', 'none') or 'none'}\n"
+                f"           Underlying feeling: {analysis.get('underlyingFeelingCandidate', 'none') or 'none'}\n"
+                f"           Unspoken need: {analysis.get('unspokenNeedCandidate', 'none') or 'none'}",
+                flush=True
+            )
 
             if should and conf >= INTERJECT_CONFIDENCE_THRESHOLD and cooldown_ok:
                 last_interject_ts = now
@@ -549,9 +567,12 @@ def interject_worker():
                     }
                 )
                 print(
-                    f"\n[INTERJECT] type={decision['interventionType']} "
-                    f"conf={conf:.2f} reasons={decision['reasons']}\n"
-                    f"Message: {decision['candidateMessage']}"
+                    f"\n[{timestamp}] 🎯 INTERJECTION TRIGGERED:\n"
+                    f"           Type: {decision['interventionType']} | "
+                    f"Confidence: {conf:.2f} | Value: {decision.get('interventionValue', '?')}/3\n"
+                    f"           Reasons: {decision['reasons']}\n"
+                    f"           >>> {decision['candidateMessage']}",
+                    flush=True
                 )
             else:
                 # Still log the decision for observability
@@ -563,6 +584,19 @@ def interject_worker():
                         "skipped": True,
                         "cooldown_ok": cooldown_ok,
                     }
+                )
+                # Print why it was skipped
+                skip_reasons = []
+                if not should:
+                    skip_reasons.append("shouldInterject=False")
+                if conf < INTERJECT_CONFIDENCE_THRESHOLD:
+                    skip_reasons.append(f"conf {conf:.2f} < {INTERJECT_CONFIDENCE_THRESHOLD}")
+                if not cooldown_ok:
+                    skip_reasons.append("cooldown not met")
+                print(
+                    f"[{timestamp}] INTERJECTION SKIPPED: {', '.join(skip_reasons)} | "
+                    f"type={decision['interventionType']} value={decision.get('interventionValue', '?')}/3",
+                    flush=True
                 )
         except Exception as e:
             now = time.time()
