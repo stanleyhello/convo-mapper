@@ -44,7 +44,7 @@ except Exception:
 
 import soundcard as sc
 from faster_whisper import WhisperModel
-from flask import Flask, jsonify, render_template_string, request
+from flask import Flask, jsonify, render_template_string, request, send_from_directory
 
 
 # =========================
@@ -152,6 +152,62 @@ def _log_entry(source: str, text: str):
     except Exception as e:
         # Avoid spamming; best-effort logging
         print(f"Warning: failed to write transcript log to {path}: {e}")
+
+
+def _condense_summaries(summaries: list, max_chars: int = 400) -> str:
+    """
+    Condense multiple summaries into a single concise paragraph.
+    If only 1 summary or total is short, return as-is.
+    Otherwise, extract key sentences to create a condensed version.
+    """
+    if not summaries:
+        return ""
+    
+    if len(summaries) == 1:
+        return summaries[0]
+    
+    # Join all summaries
+    combined = " ".join(summaries)
+    
+    # If short enough, return as-is
+    if len(combined) <= max_chars:
+        return combined
+    
+    # Split into sentences
+    import re
+    sentences = re.split(r'(?<=[.!?])\s+', combined)
+    sentences = [s.strip() for s in sentences if s.strip()]
+    
+    if len(sentences) <= 2:
+        return combined[:max_chars] + "..."
+    
+    # Take first sentence, and try to include more if space allows
+    result = []
+    current_len = 0
+    
+    # Always include first sentence
+    result.append(sentences[0])
+    current_len += len(sentences[0])
+    
+    # Try to add middle/end sentences if space allows
+    remaining = max_chars - current_len - 50  # Leave room for "..." indicator
+    
+    # Add last sentence if it fits
+    if len(sentences[-1]) <= remaining:
+        result.append(sentences[-1])
+        remaining -= len(sentences[-1])
+    
+    # Add a middle sentence if space
+    if len(sentences) > 3:
+        mid_idx = len(sentences) // 2
+        if len(sentences[mid_idx]) <= remaining:
+            result.insert(1, sentences[mid_idx])
+    
+    # If we couldn't fit much, just truncate the combined text
+    if len(result) == 1 and len(combined) > max_chars:
+        return combined[:max_chars].rsplit(' ', 1)[0] + "..."
+    
+    return " ".join(result)
 
 
 # =========================
@@ -573,6 +629,10 @@ HTML_TEMPLATE = """
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ConvoMapper</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -624,15 +684,10 @@ HTML_TEMPLATE = """
     }
     
     .logo-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 0.875rem;
+      object-fit: contain;
     }
     
     .logo h1 {
@@ -1277,15 +1332,31 @@ HTML_TEMPLATE = """
     /* Therapy toggle special styling */
     .therapy-toggle {
       margin-left: auto;
-      background: rgba(234, 179, 8, 0.1);
-      padding: 0.4rem 0.75rem;
-      border-radius: 6px;
-      border: 1px solid transparent;
-      transition: border-color 0.2s;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.05));
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      transition: all 0.3s ease;
+      gap: 0.6rem;
     }
     
-    .therapy-toggle.active { border-color: var(--warning); }
-    .therapy-toggle .control-label { color: var(--warning); font-weight: 500; }
+    .therapy-toggle:hover {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(168, 85, 247, 0.1));
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+    
+    .therapy-toggle.active { 
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(168, 85, 247, 0.15));
+      border-color: rgba(139, 92, 246, 0.5);
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
+    }
+    
+    .therapy-toggle .control-label { 
+      color: rgb(167, 139, 250);
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+    }
     
     /* History */
     .history-container {
@@ -1385,7 +1456,7 @@ HTML_TEMPLATE = """
 <body>
   <header>
     <div class="logo">
-      <div class="logo-icon">CM</div>
+      <img src="/assets/android-chrome-192x192.png" alt="ConvoMapper" class="logo-icon">
       <h1>ConvoMapper</h1>
     </div>
     <div class="status-group">
@@ -1422,7 +1493,7 @@ HTML_TEMPLATE = """
     </div>
     
     <div class="control-group therapy-toggle" id="therapyToggleGroup">
-      <span class="control-label">🧠 Therapy Mode</span>
+      <span class="control-label">Therapy Mode</span>
       <div id="toggleTherapy" class="toggle-switch" onclick="toggleTherapy()"></div>
       </div>
   </div>
@@ -1993,6 +2064,12 @@ def get_therapy_status():
         return jsonify({"therapy_enabled": therapy_mode_enabled})
 
 
+@app.route("/assets/<path:filename>")
+def serve_asset(filename):
+    """Serve static files from assets folder."""
+    return send_from_directory("assets", filename)
+
+
 def _read_memory_log():
     """
     Read today's memory log file and parse entries.
@@ -2092,11 +2169,11 @@ def get_timeline():
     # Format for frontend (reversed - latest first)
     timeline = []
     for g in reversed(grouped):
-        combined_summary = " ".join(g["summaries"])
+        condensed = _condense_summaries(g["summaries"])
         timeline.append({
             "time": time.strftime("%H:%M", time.localtime(g["start_ts"])),
             "title": g["title"],
-            "summary": combined_summary,
+            "summary": condensed,
             "chunk_count": len(g["summaries"])
         })
     
@@ -2140,11 +2217,11 @@ def generate_report():
             {
                 "time": time.strftime("%H:%M", time.localtime(g["start_ts"])),
                 "title": g["title"],
-                "summary": " ".join(g["summaries"])
+                "summary": _condense_summaries(g["summaries"])
             }
             for g in grouped
         ],
-        "summaries": [" ".join(g["summaries"]) for g in grouped],
+        "summaries": [_condense_summaries(g["summaries"]) for g in grouped],
         "transcript_preview": transcript[:2000] if transcript else "No transcript available",
     }
     return jsonify(report)
@@ -2221,11 +2298,11 @@ def get_history():
         # Build timeline topics (same format as /api/timeline)
         topics = []
         for g in grouped:
-            combined_summary = " ".join(g["summaries"])
+            condensed = _condense_summaries(g["summaries"])
             topics.append({
                 "time": time.strftime("%H:%M", time.localtime(g["start_ts"])),
                 "title": g["title"],
-                "summary": combined_summary,
+                "summary": condensed,
                 "parts": len(g["summaries"])
             })
         
