@@ -954,3 +954,781 @@
   "cooldown_ok": true
 }
 
+{
+  "type": "interjection",
+  "ts": 1764899231.0403159,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue provided",
+      "No context or details available"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue provided\", \"No context or details available\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899242.000892,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue available",
+      "Cannot assess without input"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue available\", \"Cannot assess without input\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899293.280876,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Unable to perform analysis"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Unable to perform analysis\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899303.9321449,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue data provided",
+      "Unable to analyze interactions"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue data provided\", \"Unable to analyze interactions\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899354.971436,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Cannot analyze without input"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Cannot analyze without input\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899365.5692558,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Unable to assess dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Unable to assess dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899418.308767,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Cannot analyze without input"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"none\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Cannot analyze without input\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "none",
+      "unspokenNeedCandidate": "none"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899427.428308,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue provided",
+      "No analysis can be performed"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue provided\", \"No analysis can be performed\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764899470.842091,
+  "summary": "Two people are discussing how to do something involving a tilt, but there's confusion about whether or not to tilt the head. One person does not understand what the other is referring to.",
+  "title": "'Confusion Over Head Tilting'"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899481.078531,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "clarify_meaning",
+    "confidence": 0.8,
+    "reasons": [
+      "Confusion over head tilting indicates misunderstanding",
+      "Conversation about head tilt lacks clarity"
+    ],
+    "candidateMessage": "It seems like there's a misunderstanding about the 'head tilt'; can you clarify what each of you means by that?",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": true,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"clarify_meaning\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\n      \"Confusion over head tilting indicates misunderstanding\",\n      \"Conversation about head tilt lacks clarity\"\n    ],\n    \"candidateMessage\": \"It seems like there's a misunderstanding about the 'head tilt'; can you clarify what each of you means by that?\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": true,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 2
+  }
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899489.519406,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Unable to analyze"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Unable to analyze\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764899533.6153212,
+  "summary": "Matt shares a brief encounter he had with Prince William during a polo event line-up. He humorously recounts a moment when he feared being introduced as someone about to portray Prince Philip, which led to Prince William calling him a \"legend.\" The conversation shifts to Matt’s past role in the series \"Downton Abbey,\" and a question is raised about whether it caused any tension at home due to his character being involved with Jim Carter's character, Carson.",
+  "title": "Polo Event Prince William Encounter"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899543.616232,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "clarify_meaning",
+    "confidence": 0.8,
+    "reasons": [
+      "confusion over the head tilting",
+      "frequent repetition"
+    ],
+    "candidateMessage": "It seems like there's some confusion about the head tilting; can you clarify what you mean by 'tilt' versus 'no head tilt'?",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": true,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"none\",\n    \"unspokenNeedCandidate\": \"none\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"clarify_meaning\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"confusion over the head tilting\", \"frequent repetition\"],\n    \"candidateMessage\": \"It seems like there's some confusion about the head tilting; can you clarify what you mean by 'tilt' versus 'no head tilt'?\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": true,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "none",
+      "unspokenNeedCandidate": "none"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899551.534781,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No dialogue to analyze",
+      "No data available to infer anything"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No dialogue to analyze\", \"No data available to infer anything\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764899596.5088608,
+  "summary": "A person shares their experience of feeling unappreciated at home compared to their work as they discuss their role as Princess Margaret on \"The Crown.\" They mention coming straight from the set in Wiltshire and clarify that portraying Princess Margaret is a professional role rather than a personal persona. The conversation includes an apology for a slip and a lighthearted compliment about someone's legs before transitioning back to discussing the acting role.",
+  "title": "Acting vs. Home Appreciation"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899606.425983,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "The feeling of being unappreciated is expressed.",
+      "Conversation includes tension related to home appreciation."
+    ],
+    "candidateMessage": "It seems there's a need for more appreciation at home, highlighted by feeling unappreciated compared to work.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unappreciated\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"The feeling of being unappreciated is expressed.\", \"Conversation includes tension related to home appreciation.\"],\n    \"candidateMessage\": \"It seems there's a need for more appreciation at home, highlighted by feeling unappreciated compared to work.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unappreciated",
+      "unspokenNeedCandidate": "need for appreciation"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899613.199405,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 1.0,
+    "reasons": [
+      "No data provided",
+      "Cannot analyze without dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 1.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Cannot analyze without dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764899661.193224,
+  "summary": "The conversation discusses a farewell to Margaret and praises Vanessa Kirby's nomination for Best Supporting Actress for her role as Princess Margaret. The speaker expresses admiration for the show and mentions personal viewing habits, including waiting to watch it with their spouse. Recognition after \"The Crown\" has increased, leading to an awkward moment while shopping for vodka in Dalston.",
+  "title": "Acting vs. Home Appreciation"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899669.386505,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "discussion about feeling unappreciated",
+      "mention of home vs professional appreciation"
+    ],
+    "candidateMessage": "It seems like there's a need for appreciation at home, similar to what you experience professionally.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\n      \"discussion about feeling unappreciated\",\n      \"mention of home vs professional appreciation\"\n    ],\n    \"candidateMessage\": \"It seems like there's a need for appreciation at home, similar to what you experience professionally.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": "need for appreciation"
+    },
+    "interventionValue": 2
+  }
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899675.094315,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data to analyze",
+      "No dialogue provided"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data to analyze\", \"No dialogue provided\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "chunk",
+  "ts": 1764899722.7888901,
+  "summary": "A girl passed by and noticed me, likely due to the drink and my facial expression. She mistook me for someone else, saying \"Princess! That's Margaret.\" Her friends were also looking, but I clarified that she was mistaken. She seemed very animated in her reaction.",
+  "title": "Acting vs. Home Appreciation"
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899731.030384,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "reflect_deeper_emotion",
+    "confidence": 0.8,
+    "reasons": [
+      "underlying feeling of being unappreciated is present",
+      "opportunity to validate emotions could enhance understanding"
+    ],
+    "candidateMessage": "It sounds like there's a feeling of unappreciation from the acting vs. home discussion; perhaps a need for recognition is present.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unappreciated\",\n    \"unspokenNeedCandidate\": \"need for recognition\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"reflect_deeper_emotion\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying feeling of being unappreciated is present\", \"opportunity to validate emotions could enhance understanding\"],\n    \"candidateMessage\": \"It sounds like there's a feeling of unappreciation from the acting vs. home discussion; perhaps a need for recognition is present.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unappreciated",
+      "unspokenNeedCandidate": "need for recognition"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899736.9158762,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided in RecentDialogue or RecentSummaries"
+    ],
+    "candidateMessage": "",
+    "raw": "{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided in RecentDialogue or RecentSummaries\"],\n    \"candidateMessage\": \"\"\n  }\n}",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899828.967839,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "discussion about acting vs home appreciation",
+      "mention of feeling unappreciated at home"
+    ],
+    "candidateMessage": "It sounds like there's a need for appreciation when discussing acting roles and home life.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unappreciated\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"discussion about acting vs home appreciation\", \"mention of feeling unappreciated at home\"],\n    \"candidateMessage\": \"It sounds like there's a need for appreciation when discussing acting roles and home life.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unappreciated",
+      "unspokenNeedCandidate": "need for appreciation"
+    },
+    "interventionValue": 2
+  },
+  "skipped": true,
+  "cooldown_ok": false
+}
+
+{
+  "type": "interjection",
+  "ts": 1764899850.521106,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data to analyze",
+      "No recent dialogue or summaries provided"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data to analyze\", \"No recent dialogue or summaries provided\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764901976.6277142,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.8,
+    "reasons": [
+      "Conversation is calm and light-hearted",
+      "No visible conflict or misunderstanding"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unappreciated\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 0,\n    \"reasons\": [\"Conversation is calm and light-hearted\", \"No visible conflict or misunderstanding\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unappreciated",
+      "unspokenNeedCandidate": "need for appreciation"
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764902014.755466,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Cannot infer anything without dialogue or summaries"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Cannot infer anything without dialogue or summaries\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764902249.869038,
+  "decision": {
+    "shouldInterject": true,
+    "interventionType": "identify_unspoken_need",
+    "confidence": 0.8,
+    "reasons": [
+      "underlying feelings of unappreciation noted",
+      "discussion about feeling unrecognized at home"
+    ],
+    "candidateMessage": "It seems there might be a need for appreciation stemming from feeling unrecognized at home, despite professional success.",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"feeling unappreciated\",\n    \"unspokenNeedCandidate\": \"need for appreciation\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": true,\n    \"interventionType\": \"identify_unspoken_need\",\n    \"confidence\": 0.8,\n    \"interventionValue\": 2,\n    \"reasons\": [\"underlying feelings of unappreciation noted\", \"discussion about feeling unrecognized at home\"],\n    \"candidateMessage\": \"It seems there might be a need for appreciation stemming from feeling unrecognized at home, despite professional success.\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "feeling unappreciated",
+      "unspokenNeedCandidate": "need for appreciation"
+    },
+    "interventionValue": 2
+  }
+}
+
+{
+  "type": "interjection",
+  "ts": 1764903110.114892,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No data provided",
+      "Can't analyze without dialogue"
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No data provided\", \"Can't analyze without dialogue\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
+{
+  "type": "interjection",
+  "ts": 1764908483.327989,
+  "decision": {
+    "shouldInterject": false,
+    "interventionType": "none",
+    "confidence": 0.0,
+    "reasons": [
+      "No conversation data provided.",
+      "Unable to analyze or suggest intervention."
+    ],
+    "candidateMessage": "",
+    "raw": "```json\n{\n  \"analysis\": {\n    \"escalationLevel\": 0,\n    \"blameLevel\": 0,\n    \"nameCallingPresent\": false,\n    \"globalCriticismPresent\": false,\n    \"youStatementsHeavy\": false,\n    \"misunderstandingLikely\": false,\n    \"cycleDescription\": \"\",\n    \"underlyingFeelingCandidate\": \"\",\n    \"unspokenNeedCandidate\": \"\"\n  },\n  \"intervention\": {\n    \"shouldInterject\": false,\n    \"interventionType\": \"none\",\n    \"confidence\": 0.0,\n    \"interventionValue\": 0,\n    \"reasons\": [\"No conversation data provided.\", \"Unable to analyze or suggest intervention.\"],\n    \"candidateMessage\": \"\"\n  }\n}\n```",
+    "analysis": {
+      "escalationLevel": 0,
+      "blameLevel": 0,
+      "nameCallingPresent": false,
+      "globalCriticismPresent": false,
+      "youStatementsHeavy": false,
+      "misunderstandingLikely": false,
+      "cycleDescription": "",
+      "underlyingFeelingCandidate": "",
+      "unspokenNeedCandidate": ""
+    },
+    "interventionValue": 0
+  },
+  "skipped": true,
+  "cooldown_ok": true
+}
+
