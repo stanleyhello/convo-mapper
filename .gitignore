@@ -5,3 +5,7 @@ __pycache__/
 .env
 .openai_key
 archive/
+
+# Local session data (private)
+data/*.jsonl
+!data/.gitkeep

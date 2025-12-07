@@ -107,7 +107,7 @@ MIC_NAME_FILTER = "Akif's AirPods Pro"  # Use AirPods mic (no speaker bleed)
 
 # Optional JSONL logging (rotated daily)
 ENABLE_TRANSCRIPT_LOG = True
-LOG_PATH_TEMPLATE = "transcript-{date}.jsonl"
+LOG_PATH_TEMPLATE = "data/transcript-{date}.jsonl"
 
 
 # =========================
@@ -1286,6 +1286,100 @@ HTML_TEMPLATE = """
     
     .therapy-toggle.active { border-color: var(--warning); }
     .therapy-toggle .control-label { color: var(--warning); font-weight: 500; }
+    
+    /* History */
+    .history-container {
+      padding: 1rem;
+    }
+    
+    .history-date-group {
+      margin-bottom: 0.5rem;
+    }
+    
+    .history-date-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border);
+    }
+    
+    .history-date-header:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--accent);
+    }
+    
+    .history-date-header.expanded {
+      border-radius: 8px 8px 0 0;
+      border-bottom: none;
+      background: var(--bg-tertiary);
+    }
+    
+    .history-date-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .history-date-icon {
+      font-size: 1.2rem;
+    }
+    
+    .history-date-text {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .history-date-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      background: var(--bg-primary);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+    }
+    
+    .history-date-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .history-session-count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--bg-primary);
+      padding: 0.25rem 0.6rem;
+      border-radius: 12px;
+    }
+    
+    .history-expand-icon {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+    
+    .history-date-header.expanded .history-expand-icon {
+      transform: rotate(90deg);
+    }
+    
+    .history-sessions {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+    }
+    
+    .history-date-group.expanded .history-sessions {
+      max-height: 5000px;
+    }
   </style>
 </head>
 <body>
@@ -1308,6 +1402,7 @@ HTML_TEMPLATE = """
     <button class="tab" data-tab="timeline">Timeline</button>
     <button class="tab" data-tab="insights">Insights</button>
     <button class="tab" data-tab="report">Report</button>
+    <button class="tab" data-tab="history">History</button>
   </nav>
   
   <div class="controls-bar">
@@ -1458,6 +1553,22 @@ HTML_TEMPLATE = """
         </ul>
       </div>
     </div>
+    
+    <!-- HISTORY TAB -->
+    <div id="history" class="tab-content">
+      <div class="card" style="height: calc(100vh - 180px);">
+        <div class="card-header">
+          <span class="card-title">Session History</span>
+          <button class="btn btn-ghost" onclick="fetchHistory()">Refresh</button>
+        </div>
+        <div id="historyView" class="history-container" style="overflow-y: auto; max-height: calc(100vh - 260px);">
+          <div class="empty-state">
+            <div class="empty-state-icon">📚</div>
+            <div class="empty-state-text">Loading session history...</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -1472,6 +1583,7 @@ HTML_TEMPLATE = """
         // Auto-fetch data when switching tabs
         if (tab.dataset.tab === 'insights') fetchInsights();
         if (tab.dataset.tab === 'timeline') fetchTimeline();
+        if (tab.dataset.tab === 'history') fetchHistory();
       });
     });
     
@@ -1573,6 +1685,58 @@ HTML_TEMPLATE = """
     }
     
     function toggleTimelineItem(el) {
+      el.classList.toggle('expanded');
+    }
+    
+    // History
+    async function fetchHistory() {
+      try {
+        const res = await fetch('/api/history');
+        const data = await res.json();
+        const historyEl = document.getElementById('historyView');
+        
+        if (data.dates && data.dates.length > 0) {
+          historyEl.innerHTML = data.dates.map((dateGroup, dateIdx) => `
+            <div class="history-date-group" data-date="${dateGroup.date}">
+              <div class="history-date-header" onclick="toggleHistoryDate(this)">
+                <div class="history-date-left">
+                  <span class="history-date-text">${escapeHtml(dateGroup.date_display)}</span>
+                  ${dateGroup.date_label ? `<span class="history-date-label">${escapeHtml(dateGroup.date_label)}</span>` : ''}
+                </div>
+                <div class="history-date-right">
+                  <span class="history-session-count">${dateGroup.topic_count} topics</span>
+                  <span class="history-expand-icon">▶</span>
+                </div>
+              </div>
+              <div class="history-sessions">
+                <div class="timeline" style="padding: 1rem;">
+                  ${dateGroup.topics.map((t, idx) => `
+                    <div class="timeline-item" onclick="toggleTimelineItem(this)" data-idx="${idx}">
+                      <div class="timeline-header">
+                        <span class="timeline-time">${t.time}</span>
+                        <span class="timeline-title">${escapeHtml(t.title)}</span>
+                        ${t.parts > 1 ? `<span class="timeline-badge">${t.parts} parts</span>` : ''}
+                        <span class="timeline-expand-icon">▶</span>
+                      </div>
+                      <div class="timeline-summary">${escapeHtml(t.summary)}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          historyEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📚</div><div class="empty-state-text">No session history found</div></div>';
+        }
+      } catch (e) {
+        console.error('Failed to fetch history:', e);
+        document.getElementById('historyView').innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><div class="empty-state-text">Failed to load history</div></div>';
+      }
+    }
+    
+    function toggleHistoryDate(el) {
+      const group = el.closest('.history-date-group');
+      group.classList.toggle('expanded');
       el.classList.toggle('expanded');
     }
     
@@ -1835,7 +1999,7 @@ def _read_memory_log():
     Returns chunks, interjections, and ltm bullets.
     """
     date_str = datetime.date.today().isoformat()
-    path = f"memory-{date_str}.jsonl"
+    path = f"data/memory-{date_str}.jsonl"
     
     chunks = []
     interjections = []
@@ -1984,6 +2148,112 @@ def generate_report():
         "transcript_preview": transcript[:2000] if transcript else "No transcript available",
     }
     return jsonify(report)
+
+
+@app.route("/api/history")
+def get_history():
+    """Get all session history from the data folder, grouped by date with timeline format."""
+    import glob
+    
+    data_dir = "data"
+    if not os.path.exists(data_dir):
+        return jsonify({"dates": []})
+    
+    # Find all memory files
+    memory_files = sorted(glob.glob(os.path.join(data_dir, "memory-*.jsonl")), reverse=True)
+    
+    dates = []
+    
+    for memory_file in memory_files:
+        basename = os.path.basename(memory_file)
+        # Extract date from filename: memory-2025-12-04.jsonl -> 2025-12-04
+        date_str = basename.replace("memory-", "").replace(".jsonl", "")
+        
+        # Parse the memory file
+        chunks = []
+        
+        try:
+            with open(memory_file, "r", encoding="utf-8") as fh:
+                content = fh.read()
+                entries = content.strip().split("\n\n")
+                
+                for entry_str in entries:
+                    if not entry_str.strip():
+                        continue
+                    try:
+                        entry = json.loads(entry_str.strip())
+                        if entry.get("type") == "chunk":
+                            chunks.append({
+                                "ts": entry.get("ts", 0),
+                                "title": entry.get("title", ""),
+                                "summary": entry.get("summary", ""),
+                            })
+                    except json.JSONDecodeError:
+                        continue
+        except Exception as e:
+            print(f"Error reading {memory_file}: {e}")
+            continue
+        
+        if not chunks:
+            continue  # Skip empty dates
+        
+        # Group consecutive same-topic chunks (same as Timeline)
+        chunks = sorted(chunks, key=lambda x: x["ts"], reverse=True)  # Latest first
+        grouped = []
+        for chunk in chunks:
+            title = chunk.get("title", "").strip()
+            if not title or title == "(pending)":
+                continue
+            if grouped and grouped[-1]["title"] == title:
+                grouped[-1]["summaries"].append(chunk.get("summary", ""))
+                grouped[-1]["start_ts"] = chunk["ts"]  # Since reversed, this extends backwards
+            else:
+                grouped.append({
+                    "title": title,
+                    "start_ts": chunk["ts"],
+                    "end_ts": chunk["ts"],
+                    "summaries": [chunk.get("summary", "")]
+                })
+        
+        if not grouped:
+            continue
+        
+        # Build timeline topics (same format as /api/timeline)
+        topics = []
+        for g in grouped:
+            combined_summary = " ".join(g["summaries"])
+            topics.append({
+                "time": time.strftime("%H:%M", time.localtime(g["start_ts"])),
+                "title": g["title"],
+                "summary": combined_summary,
+                "parts": len(g["summaries"])
+            })
+        
+        # Format date nicely
+        try:
+            from datetime import datetime as dt
+            date_obj = dt.strptime(date_str, "%Y-%m-%d")
+            date_display = date_obj.strftime("%A, %B %d, %Y")
+            days_ago = (dt.now() - date_obj).days
+            if days_ago == 0:
+                date_label = "Today"
+            elif days_ago == 1:
+                date_label = "Yesterday"
+            else:
+                date_label = f"{days_ago} days ago"
+        except:
+            date_display = date_str
+            date_label = ""
+        
+        dates.append({
+            "date": date_str,
+            "date_display": date_display,
+            "date_label": date_label,
+            "topic_count": len(topics),
+            "topics": topics,
+        })
+    
+    return jsonify({"dates": dates})
 
 
 # =========================

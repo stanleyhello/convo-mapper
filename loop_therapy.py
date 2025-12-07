@@ -32,7 +32,7 @@ LOCAL_LLM_API_KEY = os.getenv("LOCAL_LLM_API_KEY", "parallax")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_API_KEY_FILE = os.getenv("OPENAI_API_KEY_FILE", ".openai_key")
 MEMORY_LOG_ENABLED = True
-MEMORY_LOG_TEMPLATE = "memory-{date}.jsonl"
+MEMORY_LOG_TEMPLATE = "data/memory-{date}.jsonl"
 
 SUMMARY_PROMPT = (
     "Summarize this transcript chunk in one paragraph (max 4 sentences). "
