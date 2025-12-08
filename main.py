@@ -1572,7 +1572,10 @@ HTML_TEMPLATE = """
       <div class="card" style="height: calc(100vh - 180px);">
         <div class="card-header">
           <span class="card-title">Conversation Timeline</span>
-          <button class="btn btn-ghost" onclick="fetchTimeline()">Refresh</button>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-ghost" onclick="resetTimeline()">Reset</button>
+            <button class="btn btn-ghost" onclick="fetchTimeline()">Refresh</button>
+          </div>
         </div>
         <div id="timelineView" class="timeline" style="overflow-y: auto; max-height: calc(100vh - 260px);">
           <div class="empty-state">
@@ -1757,6 +1760,16 @@ HTML_TEMPLATE = """
     
     function toggleTimelineItem(el) {
       el.classList.toggle('expanded');
+    }
+
+    async function resetTimeline() {
+      try {
+        await fetch('/api/timeline/reset', { method: 'POST' });
+        await fetchTimeline();
+        await fetchInsights();
+      } catch (e) {
+        console.error('Failed to reset timeline:', e);
+      }
     }
     
     // History
@@ -2179,6 +2192,29 @@ def get_timeline():
     
     return jsonify({"topics": timeline})
 
+@app.route("/api/timeline/reset", methods=["POST"])
+def reset_timeline_data():
+    """
+    Clear today's memory log and reset in-memory buffers so the timeline/insights restart.
+    """
+    try:
+        import loop_therapy
+        loop_therapy.reset_memory_state()
+    except Exception as exc:
+        return jsonify({"status": "error", "message": f"reset failed: {exc}"}), 500
+
+    date_str = datetime.date.today().isoformat()
+    path = f"data/memory-{date_str}.jsonl"
+    removed = False
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+            removed = True
+    except Exception as exc:
+        return jsonify({"status": "error", "message": f"delete failed: {exc}"}), 500
+
+    return jsonify({"status": "ok", "removed": removed})
+
 
 @app.route("/api/report")
 def generate_report():
@@ -2395,4 +2431,3 @@ if __name__ == "__main__":
     start_audio_and_model()
     # Disable reloader so threads aren’t started twice
     app.run(host="127.0.0.1", port=5001, debug=False, use_reloader=False)
-

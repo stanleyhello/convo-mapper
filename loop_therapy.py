@@ -33,6 +33,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_API_KEY_FILE = os.getenv("OPENAI_API_KEY_FILE", ".openai_key")
 MEMORY_LOG_ENABLED = True
 MEMORY_LOG_TEMPLATE = "data/memory-{date}.jsonl"
+OPENAI_BASE_URL="https://api.openai.com/v1"
 
 SUMMARY_PROMPT = (
     "Summarize this transcript chunk in one paragraph (max 4 sentences). "
@@ -191,6 +192,7 @@ chunk_buffer = []  # raw strings collected since last summary
 log_lock = threading.Lock()
 start_time = time.time()
 warmup_summaries = []
+reset_event = threading.Event()
 
 
 def log_memory(entry: dict):
@@ -391,14 +393,20 @@ def poll_transcripts():
 
         now = time.time()
         for source, text in (("mic", mic_text), ("system", system_text)):
+            # If the transcript was cleared, reset our offset so we keep ingesting new text
+            if len(text) < last_lengths[source]:
+                last_lengths[source] = 0
+
             if len(text) > last_lengths[source]:
-                new = text[last_lengths[source]:].strip()
+                new = text[last_lengths[source]:]
+                new = new.strip()
                 if new:
                     with memory_lock:
                         stm.append({"ts": now, "source": source, "text": new})
                         chunk_buffer.append(new)
                         purge_stm(now)
-                last_lengths[source] = len(text)
+            # Always advance to current length so we stay in sync even after clears
+            last_lengths[source] = len(text)
 
         time.sleep(POLL_SECONDS)
 
@@ -421,11 +429,20 @@ def memory_worker():
     Every SUMMARY_INTERVAL_SECONDS, summarize the buffered text, update MTM,
     and periodically refresh LTM.
     """
+    global start_time
     chunk_count = 0
     prev_summary = None
     prev_title = None
 
     while True:
+        if reset_event.is_set():
+            # Reset local counters/titles after an external reset
+            chunk_count = 0
+            prev_summary = None
+            prev_title = None
+            reset_event.clear()
+            start_time = time.time()
+
         time.sleep(SUMMARY_INTERVAL_SECONDS)
 
         with memory_lock:
@@ -512,6 +529,21 @@ def memory_worker():
                     print(f"             {i}. {b}", flush=True)
         except Exception as e:
             print(f"[memory] error: {e}")
+
+
+def reset_memory_state():
+    """
+    Clear STM/MTM/LTM buffers and signal workers to restart counters/titles.
+    """
+    global start_time
+    with memory_lock:
+        stm.clear()
+        mtm.clear()
+        ltm.clear()
+        chunk_buffer.clear()
+        warmup_summaries.clear()
+    start_time = time.time()
+    reset_event.set()
 
 
 def interject_worker():
